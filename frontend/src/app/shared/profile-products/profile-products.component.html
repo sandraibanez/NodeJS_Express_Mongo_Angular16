@@ -1,0 +1,5 @@
+<div *ngIf="listProducts.length == 0">No products</div>
+
+<div *ngIf="listProducts" class="container_cat">
+    <app-card-product class="item" *ngFor="let product of listProducts" [product]="product"></app-card-product>
+</div>

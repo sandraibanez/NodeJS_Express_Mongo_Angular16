@@ -1,0 +1,46 @@
+<div class="details_page">
+    <div *ngIf="!product">No product</div>
+    <div class="product" *ngIf="product">
+        <!-- <div class="product-image">
+            <app-carousel [images_product]="images" [autoSlide]="true" [controls_2]="true"></app-carousel>
+        </div> -->
+        <div class="product-info">
+            <div class="title">
+                <h3>{{product.name}}</h3>
+                <p class="price">Price: {{product.price}} €</p>
+            </div>
+            <div class="product-bio">
+                <div class="description"><strong>Description: </strong>{{product.description}}.</div>
+                <div class="category"><strong>Category: </strong>{{product.name_cat}}.</div>
+                <div class="state"><strong>State: </strong>{{product.state}}.</div>
+            </div>
+            <!-- <div class="author" [routerLink]="['/profile', product.author.username]"> -->
+                <!-- <img class="author-avatar" src="{{product.author.image}}"> -->
+                <!-- <p>{{product.author.username}}</p> -->
+            <!-- </div> -->
+        </div>
+        <!-- <div class="product_like">
+            <app-favorite-button [product]="product"></app-favorite-button>
+        </div> -->
+    </div>
+
+    <!-- <div class="comments-section">
+        <app-comments *ngFor="let comment of comments" [comment]="comment" (deleteComment)="delete_comment(comment)"></app-comments>
+        <div class="create-comment" *appShowAuthed="true"> 
+            <form (ngSubmit)="create_comment()">
+                <div class="comment-new">
+                    <div class="comment-avatar-container">
+                        <img class="comment-avatar" src={{user_image}}/>
+                    </div>
+                    <fieldset [disabled]="isSubmitting">
+                        <textarea class="comment-textarea" name="enter-comment" placeholder="Write a comment..." [formControl]="commentControl"></textarea>
+                        <div class="comment-actions">
+                            <button class="post" type="submit">COMMENT</button>
+                            <button class="cancel" type="button" (click)="empty_comment()">CANCEL</button>
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+    </div> -->
+</div>

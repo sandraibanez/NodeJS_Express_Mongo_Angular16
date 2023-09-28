@@ -1,0 +1,24 @@
+<div class="product" *ngIf="product">
+    <div class="product_img" [routerLink]="['/details/', product.slug]">
+        <img src="../../../assets/img/{{images}}" alt=""/>
+    </div>
+    <div class="product_info">
+        <div class="product_redirect" [routerLink]="['/details/', product.slug]">
+            <div class="title">
+                <h3>{{product.name}} -</h3>
+                <p class="price">{{product.price}} €</p>
+            </div>
+            <div class="product-bio">
+                <div class="description"><strong>Description: </strong>{{product.description}}.</div>
+                <div class="state"><strong>State: </strong>{{product.state}}.</div>
+            </div>
+        </div>
+        <!-- <div class="author" [routerLink]="['/profile', product.author.username]">
+            <img class="author-avatar" src="{{product.author.image}}">
+            <p>{{product.author.username}}</p>
+        </div> -->
+    </div>
+    <!-- <div class="product_like">
+        <app-favorite-button [product]="product"></app-favorite-button>
+    </div> -->
+</div>

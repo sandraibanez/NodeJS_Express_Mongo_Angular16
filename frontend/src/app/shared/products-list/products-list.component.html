@@ -1,0 +1,29 @@
+<!-- <app-search (searchEvent)="get_list_filtered($event)" class="subheader"></app-search> -->
+<div class="shop-page">
+    <div class="container_list">
+        <!-- <div class="filters">
+            <app-filters (filterEvent)="get_list_filtered($event)" [listCategories]="listCategories"></app-filters>
+        </div> -->
+
+        <div *ngIf="listProducts" class="container_list_products">
+            <div class="no_products" *ngIf="listProducts.length == 0">No products</div>
+            <app-card-product class="item" *ngFor="let product of listProducts" [product]="product"></app-card-product>
+        </div>
+        
+    </div>
+    <!-- <div class="pagination">
+        <nav *ngIf="listProducts.length != 0 && totalPages.length != 1">
+            <ul class="pagination pg-blue">
+                <li *ngIf="currentPage != 1" class="page-item" (click)="setPageTo(currentPage-1)">
+                <span class="page-link">Previous</span>
+                </li>
+                <li class="page-item" [ngClass]="{'active': pageNumber === currentPage}" *ngFor="let pageNumber of totalPages" (click)="setPageTo(pageNumber)">
+                <span class="page-link">{{ pageNumber }}</span>
+                </li>
+                <li *ngIf="currentPage != totalPages[totalPages.length-1]" class="page-item" (click)="setPageTo(currentPage+1)">
+                <span class="page-link">Next</span>
+                </li>
+            </ul>
+        </nav>
+    </div> -->
+</div>

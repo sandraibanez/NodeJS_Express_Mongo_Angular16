@@ -1,0 +1,20 @@
+<header>
+  <div class="header-container">
+    <div class="logo">
+      <img src="../../../../assets/img/saleback.png" routerLink="home" alt="logo">
+      <div class="title">
+        <h2>SALEBACK</h2>
+      </div>
+    </div>
+    <nav>
+      <a class="icon" (click)="nav_bars()"><i class="fa fa-bars"></i></a>
+      <!-- <div class="nav_buttons" [ngClass]="{'responsive': !bars, 'visible': bars}"> -->
+        <button routerLink="home">Home</button>
+        <button routerLink="shop">Shop</button>
+        <!-- <button routerLink="auth/login" *appShowAuthed="false">Login</button> -->
+        <!-- <button routerLink="profile/{{currentUser.username}}" *appShowAuthed="true">Profile</button> -->
+      <!-- </div> -->
+    </nav>
+  </div>
+</header>
+

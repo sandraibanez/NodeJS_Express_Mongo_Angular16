@@ -20,7 +20,10 @@ const category_schema = mongoose.Schema({
         type: String,
         required: true
     },
-    products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    products: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Product" 
+    }],
 });
 
 category_schema.plugin(uniqueValidator, { msg: "already taken" });
@@ -36,7 +39,7 @@ category_schema.methods.slugify = function () {
     this.slug = slug(this.category_name) + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36);
 };
 
-category_schema.methods.toJSONFor = function(){
+category_schema.methods.tocategoryresponse = function(){
     return {
       slug: this.slug,
       id_cat: this.id_cat,
@@ -45,7 +48,19 @@ category_schema.methods.toJSONFor = function(){
       products: this.products,
     };
 };
+category_schema.methods.addproducts = function (productsId) {
+    if(this.products.indexOf(productsId) === -1){
+        this.products.push(productsId);
+    }
+    return this.save();
+};
 
+category_schema.methods.removeproducts = function (productsId) {
+    if(this.products.indexOf(productsId) !== -1){
+        this.products.remove(productsId);
+    }
+    return this.save();
+};
 category_schema.methods.toJSONCarousel = function(){
     return {
         slug: this.slug,

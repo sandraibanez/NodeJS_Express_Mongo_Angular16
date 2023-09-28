@@ -22,7 +22,7 @@ exports.findAll_category = async (req, res) => {
   try {
     const { offset, limit } = req.query;
     const categories = await Category.find({}, {}, { skip: Number(offset), limit: Number(limit) }).populate('products');
-    res.json(categories.map(category => category.toJSONFor()));
+    res.json(categories.map(category => category.tocategoryresponse()));
     // res.json(categories);
   } catch (error) {
     res.status(400).send({ message: "Some error occurred while retrieving categorys." });
@@ -36,7 +36,7 @@ exports.findOne_category = async (req, res) => {
       if (!category) {
           res.status(404).send({message: `Category not found!`});
       } else {
-          res.json(category);
+          res.json(category.tocategoryresponse());
       };
   } catch (error) {
     console.log(error);

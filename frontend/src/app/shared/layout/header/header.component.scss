@@ -1,0 +1,192 @@
+header {
+    width: 100%;
+    background-color: #333;
+    padding: 1em 0;
+    margin-bottom: 1em;
+}
+
+.header-container {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-right: 20px;
+}
+
+.logo {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0px 15px;
+    align-items: center;
+}
+
+.title {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+nav {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+.icon {
+    display: none;
+}
+
+@media screen and (max-width: 576px) {
+    
+    .logo img {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        margin: auto;
+        margin-left: 10px;
+        padding-bottom: 10px;
+    }
+    
+    .title h2 {
+        color: mintcream;
+        font-weight: bold;
+        font-size: 24px;
+        padding-top: 10px;
+        margin-left: -10px;
+    }
+
+    .nav_buttons {
+        display: none;
+    }
+
+    a.icon {
+        display: block; 
+        text-align: right;
+        color: white;
+        margin: auto;
+        padding: 20px;
+    }
+
+    a.icon i {
+        font-size: 35px;
+    }
+
+    .nav_buttons.visible {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        right: 0;
+        width: 130px;
+        height: 200px;
+        background-color: #333;
+        padding: 10px;
+        z-index: 1;
+    }
+
+    .nav_buttons.visible button {
+        padding: 15px;
+        color: mintcream;
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    button {
+        border: none;
+        background-color: transparent;
+    }
+}
+
+@media screen and (min-width: 577px) {
+
+    .logo img {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        margin: auto;
+        padding-bottom: 10px;
+    }
+
+    .title h2 {
+        color: mintcream;
+        font-weight: bold;
+        font-size: 24px;
+        padding-top: 10px;
+        margin-left: -10px;
+    }
+
+    .nav_buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 0px 15px;
+    }
+
+    .header-container nav button {
+        grid-row-start: 2;
+        grid-row-end: 3;
+        color: #333;
+        background-color: mintcream;
+        border-radius: 10px;
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding-left: 20px;
+        padding-right: 20px
+    }
+
+    button {
+        border: none;
+        background-color: transparent;
+    }
+
+}
+
+@media screen and (min-width: 993px) {
+
+    .logo img {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        width: 80px;
+        height: 90px;
+        text-align: center;
+        margin: auto;
+        padding-bottom: 10px;
+    }
+
+    .title h2 {
+        color: mintcream;
+        font-weight: bold;
+        padding-top: 10px;
+        margin-left: -40px;
+        font-size: 30px;
+    }
+
+    .nav_buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 0px 15px;
+    }
+
+    .header-container nav button {
+        grid-row-start: 2;
+        grid-row-end: 3;
+        color: #333;
+        background-color: mintcream;
+        border-radius: 10px;
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding-left: 20px;
+        padding-right: 20px
+    }
+
+    button {
+        border: none;
+        background-color: transparent;
+    }
+}
