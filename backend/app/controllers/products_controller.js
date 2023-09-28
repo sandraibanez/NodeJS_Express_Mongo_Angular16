@@ -106,21 +106,13 @@ readProductsWithCategory = asyncHandler(async (req, res) => {
 async function delete_product(req, res) {
     try {
         const slug = req.params.slug
-        const product = await Product.findOne({ slug: slug });
-        const category = await Category.findOne({ id_cat: product.category_id });
-        if(! product || ! category) {
-            res.status(404).send({ message: `Cannot delete Product with slug=${slug}. Maybe Product was not found!`});
-            res.json(product.toproductresponse())
-        }
-        // Elimina el producto de la categoría antes de eliminar el producto
-        category.removeproduct(product.slug);
-        // elimina el producto
-        await product.deleteOne({ slug: product.slug });
+        const product = await Product.findOneAndDelete({ slug: slug });
+        if (!product) {res.status(404).send({ message: `Cannot delete Product with id=${slug}. Maybe Product was not found!`}); }
         res.send({message: "Product was deleted successfully!"});
-    } catch (error) {
-        if (error.kind === 'ObjectId') { res.status(404).json(FormatError("Product not found", res.statusCode)); }
-        else { res.status(500).json(FormatError("An error has ocurred", res.statusCode)); }
-    }//end try catch
+      } catch (error) {
+        if (error.kind === 'ObjectId') {res.status(404).send({ message: `Product not found!`}); }
+        else { res.status(500).send({ message: "Could not delete that Product" }); }
+      }
 }//delete_product
 
 async function update_product(req, res) {

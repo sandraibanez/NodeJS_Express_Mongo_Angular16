@@ -1,7 +1,7 @@
 const Category = require("../models/category.model.js");
 
 // Create and Save a new Category
-exports.create_category = async (req, res) => {
+async function create_category (req, res) {
   try {
     const category_data = {
       id_cat: req.body.id_cat || null,
@@ -18,7 +18,7 @@ exports.create_category = async (req, res) => {
 };
 
 // Retrieve all Category from the database.
-exports.findAll_category = async (req, res) => {
+async function findAll_category (req, res) {
   try {
     const { offset, limit } = req.query;
     const categories = await Category.find({}, {}, { skip: Number(offset), limit: Number(limit) }).populate('products');
@@ -29,7 +29,7 @@ exports.findAll_category = async (req, res) => {
   }
 }
 
-exports.findOne_category = async (req, res) => {
+async function findOne_category  (req, res){
   try {
       const slug = req.params.slug
       const category = await Category.findOne({ slug: slug }).populate('products');
@@ -46,7 +46,7 @@ exports.findOne_category = async (req, res) => {
 };
 
 // // Update a Category by the slug in the request
-exports.update_category = async (req, res) => {
+async function update_category (req, res){
   try {
       const slug = req.params.slug
       const old_category = await Category.findOne({ slug: slug });
@@ -71,7 +71,7 @@ exports.update_category = async (req, res) => {
 }
 
 // // Delete a Category with the specified slug in the request
-exports.delete_category = async (req, res) => {
+async function delete_category  (req, res) {
   try {
     const slug = req.params.slug
     const categorie = await Category.findOneAndDelete({ slug });
@@ -83,7 +83,7 @@ exports.delete_category = async (req, res) => {
   }
 }
 
-exports.deleteAll_categories = async (req, res) => {
+async function deleteAll_categories (req, res) {
   try {
     const deleteALL = await Category.deleteMany();
     res.send({message: `Categories were deleted successfully!`});
@@ -91,3 +91,14 @@ exports.deleteAll_categories = async (req, res) => {
     res.status(500).send({message: err.message || "Some error occurred while removing all category."});
   }
 }
+
+const category_controller = {
+  create_category:create_category,
+  findAll_category:findAll_category,
+  findOne_category:findOne_category,
+  update_category:update_category,
+  delete_category:delete_category,
+  deleteAll_categories:deleteAll_categories
+}
+
+module.exports = category_controller
