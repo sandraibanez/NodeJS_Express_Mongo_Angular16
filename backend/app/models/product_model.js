@@ -46,9 +46,9 @@ const product_schema = new mongoose.Schema({
 product_schema.plugin(uniqueValidator, { msg: "already taken" });
 
 product_schema.pre('save', function (next) {
-    // if (!this.slug) {
+    if (!this.slug) {
         this.slugify();
-    //}
+    }
     next();
 });//pre
 

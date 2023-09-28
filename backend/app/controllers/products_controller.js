@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 const Category = require("../models/category.model.js");
 const categoryModel = require('../models/category.model.js');
+const asyncHandler = require("express-async-handler");
 async function getall_products(req, res) {
     try {
         const products = await Product.find();
@@ -39,52 +40,67 @@ async function create_product(req, res) {
             product_images: req.body.product_images || null
             
         };
-        // const category = await Category.findOne({slug}).exec();
-        const product = new Product(product_data);
-        const category = await Category.addproducts({slug: product.id_category}, {$push: {products: product._id}})
-        // await category.addproducts({slug: product.id_category}, {$push: {products: product._id}})
+    //    // Inicializa la categoría
+    //      const category = await Category.findOne({ slug: product_data.id_category });
+    //      if (category) {
+    //         // La categoría existe
+    //         const products = category.products;
+    //       } else {
+    //         console.log("error");
+    //       }
+    //     const product = new Product(product_data);
+    //     // Guarda el producto en la base de datos
+    //     await product.save();
 
-        const new_product = await product.save();
-    
-        res.json(await new_product.toproductresponse());
+    //     // Agrega el producto a la categoría
+    //     category.products.push(product._id);
+    //      // Guarda la categoría en la base de datos
+    //      await category.save();
+    // Inicializa la categoría
+    console.log(product_data.id_category);
+    const category = await Category.findOne({ slug: product_data.id_category });
+
+    // Crea un nuevo producto
+    const product = new Product(product_data);
+
+    // Guarda el producto en la base de datos
+    await product.save();
+
+    // Agrega el producto a la categoría
+    category.products.push(product._id);
+
+    // Guarda la categoría en la base de datos
+    await category.save();
+
+    // Devuelve el producto creado
+    res.json(await product.toproductresponse());
+        // const category = await Category.updateOne({slug: product.id_category}, {$push: {products: product._id}})
+        //  category = await Category.findOne({slug}).exec();
+        // const Category = category.addproducts
+        // await Category.addproducts({slug: product.id_category}, {$push: {products: product._id}})
+
+        // const new_product = await product.save();
       } catch (error) {
         res.status(500).send({message: error.message || "Some error occurred while creating the Product."});
       }
 }//create_product
 // --------------------------------------------------------
-// const getCommentsFromArticle = asyncHandler(async (req, res) => {
-//     const { slug } = req.params;
+readProductsWithCategory = asyncHandler(async (req, res) => {
+    try {
+        const slug = req.params.slug;
+        // console.log(slug);
+        const products = await Product.findOne({ id_category: slug });
+        console.log(products);
+        if (!products) {
+          res.status(404).json({ msg: "No existe el product" });
+        }
+        res.json(products);
+      } catch (error) {
+        res.status(400).send({ message: "Some error occurred while retrieving categorys." });
+      }
+  });
+  
 
-//     const article = await Article.findOne({slug}).exec();
-
-//     if (!article) {
-//         return res.status(401).json({
-//             message: "Article Not Found"
-//         });
-//     }
-
-//     const loggedin = req.loggedin;
-
-//     if (loggedin) {
-//         const loginUser = await User.findById(req.userId).exec();
-//         return await res.status(200).json({
-//             comments: await Promise.all(article.comments.map(async commentId => {
-//                 const commentObj = await Comment.findById(commentId).exec();
-//                 return await commentObj.toCommentResponse(loginUser);
-//             }))
-//         })
-//     } else {
-//         return await res.status(200).json({
-//             comments: await Promise.all(article.comments.map(async (commentId) => {
-//                 const commentObj = await Comment.findById(commentId).exec();
-//                 // console.log(commentObj);
-//                 const temp =  await commentObj.toCommentResponse(false);
-//                 // console.log(temp);
-//                 return temp;
-//             }))
-//         })
-//     }
-// });
 // ---------------------------------------------------------
 
 async function delete_product(req, res) {
@@ -150,8 +166,9 @@ const product_controller = {
     create_product: create_product,
     delete_product: delete_product,
     update_product: update_product,
-    deleteAll_product: deleteAll_product
+    deleteAll_product: deleteAll_product,
+    readProductsWithCategory
 }
 
 module.exports = product_controller
-
+// ---------------------------------------------------------------------------------
