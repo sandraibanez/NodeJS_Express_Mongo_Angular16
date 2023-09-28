@@ -40,18 +40,22 @@ export class ProductService {
     return this.http.get<Product>(`${URL}/${slug}`);
   }
 // ----------------------------------------------------------
-private productsList = new BehaviorSubject<Product[]>([]);
-  readonly products$ = this.productsList.asObservable();
-  getAll(): Observable<Product[]> {
-    return this.http.get<Product[]>(URL);
-  }
-  get products(): Product[] {
-    return this.productsList.getValue();
-  }
+// private productsList = new BehaviorSubject<Product[]>([]);
+//   readonly products$ = this.productsList.asObservable();
+//   getAll(): Observable<Product[]> {
+//     return this.http.get<Product[]>(URL);
+//   }
+//   get products(): Product[] {
+//     return this.productsList.getValue();
+//   }
 
-  set products(data: Product[]) {
-    this.productsList.next(data);
-  }
+//   set products(data: Product[]) {
+//     this.productsList.next(data);
+//   }
+  // ----------------------------------------------------------------
+  // get_products_from_category(slug: String): Observable<{}> {
+  //   return this.apiService.get_products('products/category/', slug);
+  // }
   // ----------------------------------------------------------------
   get_products_from_category(slug: String, params: any): Observable<{products: Product[], product_count: number}> {
     return this.apiService.get_products('products/category/', slug, new HttpParams({fromObject:params}));

@@ -55,12 +55,12 @@ category_schema.methods.addproducts = function (productsId) {
     return this.save();
 };
 
-category_schema.methods.removeproducts = function (productsId) {
-    if(this.products.indexOf(productsId) !== -1){
-        this.products.remove(productsId);
+category_schema.methods.removeProduct = function (productId) {
+    if (this.products.indexOf(productId) !== -1) {
+      this.products.remove(productId);
     }
     return this.save();
-};
+  };
 category_schema.methods.toJSONCarousel = function(){
     return {
         slug: this.slug,

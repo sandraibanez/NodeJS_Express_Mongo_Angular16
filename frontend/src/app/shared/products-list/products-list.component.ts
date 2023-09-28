@@ -18,7 +18,7 @@ export class ProductsListComponent implements OnInit {
   limit: number = 3;
   currentPage: number = 1;
   totalPages: Array<number> = [];
-  products: Product[]=[];
+
 
   constructor(
     private ProductService: ProductService,
@@ -42,39 +42,45 @@ export class ProductsListComponent implements OnInit {
     return params;
   }
 
-  // get_products(): void {
-    // this.getListForCategory();
-    // const params = this.getRequestParams(this.offset, this.limit);
-    // if (this.slug_Category !== null) {
-      // this.ProductService.get_products_from_category(this.slug_Category, params).subscribe({
-        // next: data => {
+  get_products(): void {
+    this.getListForCategory();
+    const params = this.getRequestParams(this.offset, this.limit);
+    console.log(this.slug_Category);
+    if (this.slug_Category !== null) {
+      console.log(this.slug_Category);
+      this.ProductService.get_products_from_category(this.slug_Category, params).subscribe({
+        next: data => {
+          console.log(data);
           // if (this.slug_Category) {
-            // this.listProducts = data.products;
+            // this.lp = data;
+            this.listProducts = data.products;
+            console.log(data.products);
             // this.totalPages = Array.from(new Array(Math.ceil(data.product_count / this.limit)), (val, index) => index + 1);
-          // }
-      //   },
-      //   error: e => console.error(e)
-      // });
-    // }
-  // }
-  get_products():void{
-    this.ProductService.getAll().subscribe({
-      next: data => {
-        this.ProductService.products =  data;
-        this.listProducts = data;
-        console.log(data);
-      },
-      error: e => console.error(e)
-    });
-    this.ProductService.products$.subscribe({
-      next: data => this.products = data,
-      error: e => console.error(e)
-    });
+          //}
+        },
+        error: e => console.error(e)
+      });
+    }
   }
+  // get_products():void{
+  //   this.ProductService.getAll().subscribe({
+  //     next: data => {
+  //       this.ProductService.products =  data;
+  //       this.listProducts = data;
+  //       console.log(data);
+  //     },
+  //     error: e => console.error(e)
+  //   });
+  //   this.ProductService.products$.subscribe({
+  //     next: data => this.products = data,
+  //     error: e => console.error(e)
+  //   });
+  //}
 
   getListForCategory() {
     this.CategoryService.all_categories().subscribe(
       (data) => {
+        console.log("listforcategory:",data);
         this.listCategories = data;
       },
       (error) => {

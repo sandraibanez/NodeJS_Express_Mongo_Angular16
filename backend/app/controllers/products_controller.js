@@ -40,22 +40,6 @@ async function create_product(req, res) {
             product_images: req.body.product_images || null
             
         };
-    //    // Inicializa la categoría
-    //      const category = await Category.findOne({ slug: product_data.id_category });
-    //      if (category) {
-    //         // La categoría existe
-    //         const products = category.products;
-    //       } else {
-    //         console.log("error");
-    //       }
-    //     const product = new Product(product_data);
-    //     // Guarda el producto en la base de datos
-    //     await product.save();
-
-    //     // Agrega el producto a la categoría
-    //     category.products.push(product._id);
-    //      // Guarda la categoría en la base de datos
-    //      await category.save();
     // Inicializa la categoría
     console.log(product_data.id_category);
     const category = await Category.findOne({ slug: product_data.id_category });
@@ -74,45 +58,122 @@ async function create_product(req, res) {
 
     // Devuelve el producto creado
     res.json(await product.toproductresponse());
-        // const category = await Category.updateOne({slug: product.id_category}, {$push: {products: product._id}})
-        //  category = await Category.findOne({slug}).exec();
-        // const Category = category.addproducts
-        // await Category.addproducts({slug: product.id_category}, {$push: {products: product._id}})
-
-        // const new_product = await product.save();
       } catch (error) {
         res.status(500).send({message: error.message || "Some error occurred while creating the Product."});
       }
 }//create_product
 // --------------------------------------------------------
 readProductsWithCategory = asyncHandler(async (req, res) => {
-    try {
-        const slug = req.params.slug;
-        // console.log(slug);
-        const products = await Product.findOne({ id_category: slug });
-        console.log(products);
-        if (!products) {
-          res.status(404).json({ msg: "No existe el product" });
-        }
-        res.json(products);
-      } catch (error) {
-        res.status(400).send({ message: "Some error occurred while retrieving categorys." });
-      }
+    // const { slug } = req.params;
+    // console.log(slug);
+    
+    // try {
+    //   const category = await Category.findOne({ slug }).exec();
+    //   console.log(category);
+    
+    //   if (!category) {
+    //     return res.status(401).json({
+    //       message: "Category Not Found"
+    //     });
+    //   }
+    
+    //   const products = await Promise.all(category.products.map(async (productId) => {
+    //     const productObj = await Product.findOne({ slug: productId }).exec();
+    //      return productObj;
+    //   }));
+    
+    //   return res.status(200).json({
+    //     products: products
+    //   });
+    // } catch (error) {
+    //   // Manejo de errores
+    //   console.error(error);
+    //   return res.status(500).json({
+    //     message: "An error occurred"
+    //   });
+    // }
+    // =================================================================
+//     const { slug } = req.params;
+//     console.log(slug);
+//   const category = await Category.findOne({ slug }).exec();
+//   if (!category) {
+//     return res.status(401).json({
+//       message: "Category not found!",
+//     });
+//   }
+
+//   return await res.status(200).json(
+//     await Promise.all(
+//       category.products.map(async (productSlug) => {
+//         const productObj = await Product.findById(productSlug).exec();
+//         const res = await productObj.toproductresponse();
+//         return res;
+//       })
+//     ),
+//   );
+// ======================================================
+const { slug } = req.params;
+console.log(slug);
+
+try {
+  const category = await Category.findOne({ slug }).exec();
+  console.log(category);
+
+  if (!category) {
+    return res.status(401).json({
+      message: "Category Not Found"
+    });
+  }
+
+  const products = await Promise.all(category.products.map(async (productId) => {
+    const productObj = await Product.findById(productId).exec(); // Buscar por _id, no por slug
+    return productObj;
+  }));
+
+  return res.status(200).json({
+    products: products
   });
+} catch (error) {
+  // Manejo de errores
+  console.error(error);
+  return res.status(500).json({
+    message: "An error occurred"
+  });
+}
+
+   });
   
 
 // ---------------------------------------------------------
 
 async function delete_product(req, res) {
-    try {
-        const slug = req.params.slug
-        const product = await Product.findOneAndDelete({ slug: slug });
-        if (!product) {res.status(404).send({ message: `Cannot delete Product with id=${slug}. Maybe Product was not found!`}); }
-        res.send({message: "Product was deleted successfully!"});
-      } catch (error) {
-        if (error.kind === 'ObjectId') {res.status(404).send({ message: `Product not found!`}); }
-        else { res.status(500).send({ message: "Could not delete that Product" }); }
-      }
+        try {
+            const slug = req.params.slug;
+            const product = await Product.findOne({ slug }).exec();
+            if (!product) {
+                return res.status(404).send({ message: `Cannot delete Product with slug=${slug}. Maybe Product was not found!` });
+            }
+    
+            const category = await Category.findOne({ slug: product.category }).exec();
+            if (category) {
+                // Elimina el producto de la array de productos de la categoría
+                const index = category.products.removeProduct(product._id);
+                if (index !== -1) {
+                    category.products.splice(index, 1);
+                    await category.save();
+                }
+            }
+    
+            await product.deleteOne();
+            return res.send({ message: "Product was deleted successfully!" });
+        } catch (error) {
+            if (error.kind === 'ObjectId') {
+                return res.status(404).send({ message: `Product not found!` });
+            } else {
+                return res.status(500).send({ message: "Could not delete that Product" });
+            }
+        }
+    
 }//delete_product
 
 async function update_product(req, res) {
