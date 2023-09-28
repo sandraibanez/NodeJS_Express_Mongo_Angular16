@@ -64,54 +64,7 @@ async function create_product(req, res) {
 }//create_product
 // --------------------------------------------------------
 readProductsWithCategory = asyncHandler(async (req, res) => {
-    // const { slug } = req.params;
-    // console.log(slug);
-    
-    // try {
-    //   const category = await Category.findOne({ slug }).exec();
-    //   console.log(category);
-    
-    //   if (!category) {
-    //     return res.status(401).json({
-    //       message: "Category Not Found"
-    //     });
-    //   }
-    
-    //   const products = await Promise.all(category.products.map(async (productId) => {
-    //     const productObj = await Product.findOne({ slug: productId }).exec();
-    //      return productObj;
-    //   }));
-    
-    //   return res.status(200).json({
-    //     products: products
-    //   });
-    // } catch (error) {
-    //   // Manejo de errores
-    //   console.error(error);
-    //   return res.status(500).json({
-    //     message: "An error occurred"
-    //   });
-    // }
-    // =================================================================
-//     const { slug } = req.params;
-//     console.log(slug);
-//   const category = await Category.findOne({ slug }).exec();
-//   if (!category) {
-//     return res.status(401).json({
-//       message: "Category not found!",
-//     });
-//   }
-
-//   return await res.status(200).json(
-//     await Promise.all(
-//       category.products.map(async (productSlug) => {
-//         const productObj = await Product.findById(productSlug).exec();
-//         const res = await productObj.toproductresponse();
-//         return res;
-//       })
-//     ),
-//   );
-// ======================================================
+   
 const { slug } = req.params;
 console.log(slug);
 

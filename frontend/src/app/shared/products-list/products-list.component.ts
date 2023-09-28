@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 })
 
 export class ProductsListComponent implements OnInit {
-  // products?: Product[];
+  products?: Product[];
   listProducts: Product[] = [];
   listCategories: Category[] = [];
   slug_Category: string | null = null;
@@ -60,6 +60,19 @@ export class ProductsListComponent implements OnInit {
         },
         error: e => console.error(e)
       });
+    }else {
+        this.ProductService.getAll().subscribe({
+      next: data => {
+        this.ProductService.products =  data;
+        this.listProducts = data;
+        console.log(data);
+      },
+      error: e => console.error(e)
+    });
+    this.ProductService.products$.subscribe({
+      next: data => this.products = data,
+      error: e => console.error(e)
+    });
     }
   }
   // get_products():void{
