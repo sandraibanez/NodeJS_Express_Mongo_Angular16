@@ -134,5 +134,20 @@ export class ProductsListComponent implements OnInit {
       }
     );
   }
+  setPageTo(pageNumber: number) {
 
+    this.currentPage = pageNumber;
+
+    if (typeof this.routeFilters === 'string') {
+      this.refresRouteFilter();
+    }
+
+    if (this.limit) {
+      this.filters.limit = this.limit;
+      this.filters.offset = this.limit * (this.currentPage - 1);
+    }
+
+    this.Location.replaceState('/shop/' + btoa(JSON.stringify(this.filters)));
+    this.get_list_filtered(this.filters);
+  }
 }
