@@ -1,0 +1,136 @@
+.container-filters {
+    width: 100%;
+    padding: 10px;
+}
+
+.title_box {
+    width: 100%;
+    text-align: center;
+}
+
+.title_box h3 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.remove_btn{
+    display: block;
+    margin: auto;
+    width: 180px;
+    padding: 8px;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #333;
+    background-image: linear-gradient(#fff,#f7f7f7);
+    border: 2px solid #333;
+    border-radius: 8px;
+}
+
+.remove_btn:hover {
+    background: rgb(192, 192, 192);
+}
+
+/*
+
+.container-filters label {
+    padding-top: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.container-filters input, .container-filters select {
+    margin-bottom: 4%;
+    background-image: linear-gradient(#fff,#f7f7f7);
+}
+
+#state {
+    display: block;
+} 
+*/
+
+@media screen and (max-width: 576px) {
+
+    .filters_box {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .container-filters label {
+        padding-top: 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    
+    .container-filters input, .container-filters select {
+        width: 80%;
+        margin-bottom: 4%;
+        background-image: linear-gradient(#fff,#f7f7f7);
+    }
+
+    .remove_btn{
+        margin-top: 10%;
+    }
+
+    #state {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 577px) {
+
+    .filters_box {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .container-filters label {
+        padding-top: 0px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    
+    .container-filters input, .container-filters select {
+        width: 80%;
+        margin-bottom: 4%;
+        background-image: linear-gradient(#fff,#f7f7f7);
+    }
+
+    .remove_btn{
+        margin-top: 5%;
+    }
+}
+
+@media screen and (min-width: 993px) {
+
+    .filters_box {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .container-filters label {
+        padding-top: 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    
+    .container-filters input, .container-filters select {
+        width: 80%;
+        margin-bottom: 4%;
+        background-image: linear-gradient(#fff,#f7f7f7);
+    }
+
+    .remove_btn{
+        margin-top: 10%;
+    }
+
+    #state {
+        display: block;
+    }
+}

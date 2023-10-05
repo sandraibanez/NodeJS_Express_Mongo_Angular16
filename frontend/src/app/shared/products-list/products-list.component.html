@@ -1,9 +1,9 @@
-<!-- <app-search (searchEvent)="get_list_filtered($event)" class="subheader"></app-search> -->
+<app-search (searchEvent)="get_list_filtered($event)" class="subheader"></app-search>
 <div class="shop-page">
     <div class="container_list">
-        <!-- <div class="filters">
+        <div class="filters">
             <app-filters (filterEvent)="get_list_filtered($event)" [listCategories]="listCategories"></app-filters>
-        </div> -->
+        </div>
 
         <div *ngIf="listProducts" class="container_list_products">
             <div class="no_products" *ngIf="listProducts.length == 0">No products</div>

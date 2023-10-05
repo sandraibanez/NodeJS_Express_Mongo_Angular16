@@ -1,0 +1,31 @@
+<div class="container-filters">
+  <div class="title_box">
+    <h3>Filters</h3>
+  </div>
+  <div class="filters_box">
+    <div class="category_box">
+      <label for='category' class="etiqueta">Category:</label>
+      <select class="form-control input-lg mr-2" name="category" id="category" [(ngModel)]="cat_slug" (change)="filter_products()">
+        <option disabled selected value="">Category</option>
+        <option *ngFor="let category of listCategories" [value]="category.slug">{{category.category_name}}</option>
+      </select>
+    </div>
+    <div class="price_box">
+      <label for='etiquetas' class="etiqueta">Price:</label>
+      <input class="form-control input-lg mr-2" type="number" id="price_min" [(ngModel)]="price_min" min="0" step="10" placeholder="Precio Mínimo" (input)="filter_products()">
+      <input class="form-control input-lg mr-2" type="number" id="price_max" [(ngModel)]="price_max" min="0" step="10" placeholder="Precio Máximo" (input)="filter_products()">
+    </div>
+
+    <div class="state_box">
+      <label for="state" class="etiqueta">State:</label>
+      <select class="form-control input-lg mr-2" id="options.id" [(ngModel)]="states2" (change)="filter_products()">
+        <option disabled selected value="">State</option>
+        <option *ngFor="let option of options" [value]="option.name">{{option.name}}</option>
+      </select>
+    </div>
+    
+    
+    
+  </div>
+  <button (click)="remove_all()" class="remove_btn">Remove Filters</button>
+</div>

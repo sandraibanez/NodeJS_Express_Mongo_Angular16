@@ -1,0 +1,12 @@
+<div class="search_box">
+  <div class="box">
+    <form name="search">
+        <input type="text" list="search" class="input" name="txt" [(ngModel)]="search_value"
+        (input)="type_event($any($event.target).value)" (change)="search_event(this)">
+        <datalist id="search">
+          <option *ngFor="let product of listProducts" [value]="product.name">{{product.name}}</option>
+        </datalist>
+    </form>
+    <i class="fas fa-search"></i>
+  </div>
+</div>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductService, Product, CategoryService, Category } from '../../core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ProductService, Product,Filters, CategoryService, Category } from '../../core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -18,8 +18,16 @@ export class ProductsListComponent implements OnInit {
   limit: number = 3;
   currentPage: number = 1;
   totalPages: Array<number> = [];
-
-
+  query!: Filters;
+  filters = new Filters();
+  routeFilters!: string | null;
+  @Input() set config(filters: Filters) {
+    if (filters) {
+      this.query = filters;
+      this.currentPage = 1;
+      this.get_list_filtered(this.query);
+    }
+  }
   constructor(
     private ProductService: ProductService,
     private CategoryService: CategoryService,
@@ -29,6 +37,7 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.slug_Category = this.ActivatedRoute.snapshot.paramMap.get('slug');
+    this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
     this.get_products();
     this.getListForCategory();
   }
@@ -60,7 +69,7 @@ export class ProductsListComponent implements OnInit {
         },
         error: e => console.error(e)
       });
-    }else {
+    }else if(this.slug_Category !== null){
         this.ProductService.getAll().subscribe({
       next: data => {
         this.ProductService.products =  data;
@@ -73,6 +82,11 @@ export class ProductsListComponent implements OnInit {
       next: data => this.products = data,
       error: e => console.error(e)
     });
+    }else if (this.routeFilters !== null) {
+      this.refresRouteFilter();
+      this.get_list_filtered(this.filters);
+    } else {
+      this.get_list_filtered(this.filters);
     }
   }
   // get_products():void{
@@ -89,7 +103,26 @@ export class ProductsListComponent implements OnInit {
   //     error: e => console.error(e)
   //   });
   //}
-
+  get_list_filtered(filters: Filters) {
+    this.filters = filters;
+    this.ProductService.get_products(filters).subscribe(
+      (data) => {
+        this.listProducts = data.products;
+        this.totalPages = Array.from(new Array(Math.ceil(data.product_count/this.limit)), (val, index) => index + 1);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  refresRouteFilter() {
+    this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
+    if(typeof(this.routeFilters) == "string" ){
+      this.filters = JSON.parse(atob(this.routeFilters));
+    }else{
+      this.filters = new Filters();
+    }
+  }
   getListForCategory() {
     this.CategoryService.all_categories().subscribe(
       (data) => {

@@ -6,15 +6,16 @@ import { RouterModule } from '@angular/router';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 // import { NgxMultiselectModule } from '@ngx-lib/multiselect';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
 import { CategoriesListComponent } from "./categories-list/categories-list.component";
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselItemsComponent } from './carousel-items/carousel-items.component';
-// import { FiltersComponent } from './filters/filters.component';
+import { FiltersComponent } from './filters/filters.component';
 // import { CommentsComponent } from './comments/comments.component';
-// import { SearchComponent } from './search/search.component';
+import { SearchComponent } from './search/search.component';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { ProfileProductsComponent } from './profile-products/profile-products.component';
 // import { ProfileFavoritesComponent } from './profile-favorites/profile-favorites.component';
@@ -29,9 +30,12 @@ import { CardProductComponent } from './card-product/card-product.component';
         HttpClientModule,
         InfiniteScrollModule,
         MdbCarouselModule,
-        // NgxMultiselectModule,
+        NgMultiSelectDropDownModule.forRoot(),
         RouterModule
+        // NgxMultiselectModule
+       
     ],
+   
     declarations: [
         CategoriesListComponent,
         CarouselItemsComponent,
@@ -39,9 +43,9 @@ import { CardProductComponent } from './card-product/card-product.component';
         ProductsListComponent,
         ProductDetailsComponent,
         ShowAuthedDirective,
-        // FiltersComponent,
+        FiltersComponent,
         // CommentsComponent,
-        // SearchComponent,
+        SearchComponent,
         ProfileProductsComponent,
         // ProfileFavoritesComponent,
         CardProductComponent
@@ -57,15 +61,16 @@ import { CardProductComponent } from './card-product/card-product.component';
         FormsModule,
         ReactiveFormsModule,
         ShowAuthedDirective,
-        // FiltersComponent,
+        FiltersComponent,
         // CommentsComponent,
-        // SearchComponent,
+        SearchComponent,
         ProfileProductsComponent,
         // ProfileFavoritesComponent,
         CardProductComponent
         // FollowButtonComponent,
         // FavoriteButtonComponent
     ],
+    
 })
 
 export class SharedModule { }

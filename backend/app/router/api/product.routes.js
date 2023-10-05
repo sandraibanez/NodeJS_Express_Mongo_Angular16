@@ -10,4 +10,5 @@ router.post( '/', product_controller.create_product);
 router.delete('/:slug', product_controller.delete_product);
 router.put('/:slug', product_controller.update_product);
 
+
 module.exports = router;

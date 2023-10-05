@@ -5,11 +5,61 @@ const categoryModel = require('../models/category.model.js');
 const asyncHandler = require("express-async-handler");
 async function getall_products(req, res) {
     try {
-        const products = await Product.find();
-        res.json(products);
-    } catch (error) {
-        res.status(500).json(FormatError("An error has ocurred", res.statusCode));
-    }//end trycath
+
+        let query = {};
+        let transUndefined = (varQuery, otherResult) => {
+          return varQuery != "undefined" && varQuery ? varQuery : otherResult;
+        };
+    
+        let limit = transUndefined(req.query.limit, 3);
+        let offset = transUndefined(req.query.offset, 0);
+        let category = transUndefined(req.query.category, "");
+        let name = transUndefined(req.query.name, "");
+        let state = transUndefined(req.query.state, "");
+        let price_min = transUndefined(req.query.price_min, 0);
+        let price_max = transUndefined(req.query.price_max, Number.MAX_SAFE_INTEGER);
+        // let favorited = transUndefined(req.query.favorited, null);
+        // let author = transUndefined(req.query.author, null);
+        // let id_user = req.auth ? req.auth.id : null;
+        let nameReg = new RegExp(name);
+    
+        query = {
+          name: { $regex: nameReg },
+          $and: [{ price: { $gte: price_min } }, { price: { $lte: price_max } }],
+        };
+    
+        if (state != "") {
+          query.state = state;
+        }
+        if (category != "") {
+          query.id_category = category;
+        }
+        // if (name != "") {
+        //   query.name = name;
+        // }
+        // if (favorited) {
+        //   const favoriter = await User.findOne({ username: favorited });
+        //   query._id = { $in: favoriter.favorites };
+        // }
+    
+        // if (author) {
+        //   const author1 = await User.findOne({ username: author });
+        //   query.author = { $in: author1._id };
+        // }
+    
+        const products = await Product.find(query).sort("name").limit(Number(limit)).skip(Number(offset));
+        const product_count = await Product.find(query).countDocuments();
+    
+        // const user = await User.findById(id_user);
+    
+        if (!products) {
+          res.status(404).json({ msg: "No existe el product" });
+        }
+    
+        return res.json({products: products.map(product => product), product_count: product_count});
+      } catch (error) {
+        res.status(400).send({ message: "Some error occurred while retrieving products." });
+      }
 }//getall_products
 async function getone_product(req, res) {
     // console.log('getone_product');
