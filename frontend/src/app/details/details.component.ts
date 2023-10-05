@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class DetailsComponent implements OnInit {
 
     product: Product | undefined;
-    images: String[] = [];
+    product_images: String[] = [];
     slug: string | null = null;
 
     isSubmitting = false;
@@ -39,7 +39,8 @@ export class DetailsComponent implements OnInit {
            this.ProductService.get_product(this.slug).subscribe({
                 next: data => {
                     this.product = data;
-                    this.images = data.images!;
+                    this.product_images = data.product_images!;
+                    console.log(this.product_images);
                     this.cd.markForCheck();
                 },
                 error: e => { 

@@ -1,9 +1,9 @@
 <div class="details_page">
     <div *ngIf="!product">No product</div>
     <div class="product" *ngIf="product">
-        <!-- <div class="product-image">
-            <app-carousel [images_product]="images" [autoSlide]="true" [controls_2]="true"></app-carousel>
-        </div> -->
+        <div class="product-image">
+            <app-carousel [images_product]="product_images" [autoSlide]="true" [controls_2]="true"></app-carousel>
+        </div>
         <div class="product-info">
             <div class="title">
                 <h3>{{product.name}}</h3>

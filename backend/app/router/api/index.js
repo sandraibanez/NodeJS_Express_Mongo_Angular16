@@ -4,6 +4,7 @@ var router = require('express').Router();
 
 router.use('/products', require('./product.routes'));
 router.use('/categories', require('./category.routes'));
+router.use('/carousel', require('./carousel.routes'));
 
 router.use(function(err, req, res, next){
     if(err.name === 'ValidationError'){

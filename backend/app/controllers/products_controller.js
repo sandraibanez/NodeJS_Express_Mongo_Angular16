@@ -78,14 +78,12 @@ try {
     });
   }
 
-  const products = await Promise.all(category.products.map(async (productId) => {
-    const productObj = await Product.findById(productId).exec(); // Buscar por _id, no por slug
-    return productObj;
-  }));
-
-  return res.status(200).json({
-    products: products
-  });
+  return await res.status(200).json({
+    products: await Promise.all(category.products.map(async productId => {
+        const productObj = await Product.findById(productId).exec();
+        return await productObj;
+    }))
+})
 } catch (error) {
   // Manejo de errores
   console.error(error);

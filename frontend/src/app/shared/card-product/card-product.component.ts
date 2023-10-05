@@ -14,13 +14,15 @@ export class CardProductComponent implements OnInit {
   @Input() product: Product = {} as Product;
   @Output() deleteProfileId = new EventEmitter<String>();
 
-  images!: String;
+  product_images: String | undefined;
 
   constructor() { }
 
-  ngOnInit(): void {  
-    if(typeof this.product.images !== "undefined"){
-      this.images = this.product.images[0];
+  ngOnInit(): void { 
+    if(typeof this.product.product_images !== "undefined"){
+      this.product_images = this.product.product_images[0];
+    } else if(typeof this.product.product_images == "undefined"){
+      console.log('error de imagen product');
     }
   }
 

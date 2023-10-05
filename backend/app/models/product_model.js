@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const slug = require('slug');
+const slugify = require('slugify');
 const uniqueValidator = require('mongoose-unique-validator');
     
 const product_schema = new mongoose.Schema({
@@ -34,6 +34,10 @@ const product_schema = new mongoose.Schema({
     },
     location: String,
     product_images: [String],
+    // product_images: {
+    //     type: String,
+    //     required: true
+    // },
     favorites: Number,
     favorited: {
         type: Boolean,
@@ -53,8 +57,17 @@ product_schema.pre('save', function (next) {
 });//pre
 
 product_schema.methods.slugify = function () {
-    this.slug = slug(this.name) + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36);
+    if (!this.slug){
+        this.slug = slugify(this.name, { lower: true, replacement: '-'});
+        }
 };//slugify
+product_schema.methods.toProductCarouselResponse = function(){
+    return {
+        slug: this.slug,
+        product_images: this.product_images,
+        name: this.name
+    };
+}
 product_schema.methods.toproductresponse = function(){
     return {
         slug: this.slug,
@@ -64,9 +77,11 @@ product_schema.methods.toproductresponse = function(){
         id_category: this.id_category,
         name_cat: this.name_cat,
         state: this.state,
-        location: this.location
+        location: this.location,
+        product_images:this.product_images
         // author: this.author,
         // favorites: this.favorites || 0,
     };
 };
+
 mongoose.model('Product', product_schema);

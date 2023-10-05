@@ -1,0 +1,38 @@
+<div *ngIf="category.length > 0" class="carousel-home">
+
+    <img *ngFor="let category of category; let i = index" src="../../../assets/img/{{category.image}}" 
+    [ngClass]="{'image-active': selectIndex === i}" [routerLink]="['/shop/categories/', category.slug]">
+
+    <div *ngIf="indicators" class="carousel-dot-home">
+        <span *ngFor="let dot of category; let i = index" class="dot"
+        [ngClass]="{'active':selectIndex === i}"
+        (click)="selectImage(i)"></span>
+    </div>
+
+    <div *ngIf="controls" class="btn-carousel btn-prev">
+        <i class="fa-sharp fa-solid fa-angles-left btn-prev-carousel icon-prev" (click)="Prev()"></i>
+    </div>
+
+    <div *ngIf="controls" class="btn-carousel btn-next">
+        <i class="fa-sharp fa-solid fa-angles-right btn-next-carousel icon-next" (click)="Next()"></i>
+    </div>
+</div>
+
+<div *ngIf="images_product" class="carousel-details">
+    <img *ngFor="let img_product of images_product; let i = index" src="../../../assets/img/{{img_product}}" 
+    [ngClass]="{'image-active': selectIndex_product_img === i}">
+
+     <div *ngIf="indicators" class="carousel-dot-details">
+        <span *ngFor="let dot of images_product; let i = index" class="dot"
+        [ngClass]="{'active':selectIndex_product_img === i}"
+        (click)="selectImage(i)"></span>
+    </div>
+
+    <div *ngIf="controls_2" class="btn-carousel button-prev">
+        <i class="fa-sharp fa-solid fa-angle-left btn-prev-carousel icon-prev" (click)="Prev()"></i>
+    </div>
+
+    <div *ngIf="controls_2" class="btn-carousel button-next">
+        <i class="fa-sharp fa-solid fa-angle-right btn-next-carousel icon-next" (click)="Next()"></i>
+    </div>
+</div>

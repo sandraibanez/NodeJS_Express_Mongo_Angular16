@@ -21,7 +21,9 @@ async function create_category (req, res) {
 async function findAll_category (req, res) {
   try {
     const { offset, limit } = req.query;
+    // console.log(offset);
     const categories = await Category.find({}, {}, { skip: Number(offset), limit: Number(limit) }).populate('products');
+    console.log(categories);
     res.json(categories.map(category => category.tocategoryresponse()));
     // res.json(categories);
   } catch (error) {

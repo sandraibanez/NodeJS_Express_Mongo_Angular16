@@ -1,6 +1,6 @@
 <div class="product" *ngIf="product">
     <div class="product_img" [routerLink]="['/details/', product.slug]">
-        <img src="../../../assets/img/{{images}}" alt=""/>
+        <img src="../../../assets/img/{{product_images}}" alt=""/>
     </div>
     <div class="product_info">
         <div class="product_redirect" [routerLink]="['/details/', product.slug]">

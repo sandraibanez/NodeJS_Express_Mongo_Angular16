@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService, Category } from '../../core'
-
+import { CategoryService, Category } from '../../core';
 @Component({
   selector: 'app-categories-list',
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.scss']
 })
-
 export class CategoriesListComponent implements OnInit {
 
   categories: Category[] = [];
@@ -32,8 +30,8 @@ export class CategoriesListComponent implements OnInit {
     this.CategoryService.get_categories(params).subscribe({
       next: data => {
         this.categories = this.categories.concat(data);
-        console.log(data);
-        // this.offset = this.offset + 3;
+        // console.log(data);
+        this.offset = this.offset + 3;
       },
       error: e => console.error(e)
   });
