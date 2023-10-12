@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const slugify = require('slugify');
 const slug = require('slug');
 const uniqueValidator = require('mongoose-unique-validator');
 
@@ -38,10 +37,7 @@ category_schema.pre('validate', function (next) {
 
 category_schema.methods.slugify = function () {
     
-    // if (!this.slug){
-        // this.slug = slugify(this.name, { lower: true, replacement: '-'});
-        //}
-        this.slug = slug(this.category_name) + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36);
+    this.slug = slug(this.category_name) + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36);
 
 };
 

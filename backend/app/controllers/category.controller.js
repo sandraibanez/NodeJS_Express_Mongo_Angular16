@@ -21,11 +21,9 @@ async function create_category (req, res) {
 async function findAll_category (req, res) {
   try {
     const { offset, limit } = req.query;
-    // console.log(offset);
     const categories = await Category.find({}, {}, { skip: Number(offset), limit: Number(limit) }).populate('products');
     console.log(categories);
     res.json(categories.map(category => category.tocategoryresponse()));
-    // res.json(categories);
   } catch (error) {
     res.status(400).send({ message: "Some error occurred while retrieving categorys." });
   }
@@ -55,7 +53,6 @@ async function update_category (req, res){
 
       if (old_category.name !== req.body.name && req.body.name !== undefined) {
         old_category.slug = null;
-        // console.log('error');
       }
 
       old_category.id_cat = req.body.id_cat || old_category.id_cat;

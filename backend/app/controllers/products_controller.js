@@ -62,7 +62,6 @@ async function getall_products(req, res) {
       }
 }//getall_products
 async function getone_product(req, res) {
-    // console.log('getone_product');
     try {
         const slug = req.params.slug
         const product = await Product.findOne({ slug: slug });
@@ -90,23 +89,17 @@ async function create_product(req, res) {
             product_images: req.body.product_images || null
             
         };
-    // Inicializa la categoría
     console.log(product_data.id_category);
     const category = await Category.findOne({ slug: product_data.id_category });
 
-    // Crea un nuevo producto
     const product = new Product(product_data);
 
-    // Guarda el producto en la base de datos
     await product.save();
 
-    // Agrega el producto a la categoría
     category.products.push(product._id);
 
-    // Guarda la categoría en la base de datos
     await category.save();
 
-    // Devuelve el producto creado
     res.json(await product.toproductresponse());
       } catch (error) {
         res.status(500).send({message: error.message || "Some error occurred while creating the Product."});
@@ -135,7 +128,7 @@ try {
     }))
 })
 } catch (error) {
-  // Manejo de errores
+
   console.error(error);
   return res.status(500).json({
     message: "An error occurred"
@@ -157,7 +150,6 @@ async function delete_product(req, res) {
     
             const category = await Category.findOne({ slug: product.category }).exec();
             if (category) {
-                // Elimina el producto de la array de productos de la categoría
                 const index = category.products.removeProduct(product._id);
                 if (index !== -1) {
                     category.products.splice(index, 1);

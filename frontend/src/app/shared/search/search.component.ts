@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService, Product, Filters } from '../../core';
-// import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-search',

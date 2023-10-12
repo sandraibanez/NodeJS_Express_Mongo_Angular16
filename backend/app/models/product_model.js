@@ -34,10 +34,6 @@ const product_schema = new mongoose.Schema({
     },
     location: String,
     product_images: [String],
-    // product_images: {
-    //     type: String,
-    //     required: true
-    // },
     favorites: Number,
     favorited: {
         type: Boolean,

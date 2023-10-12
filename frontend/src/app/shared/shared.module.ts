@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
-// import { NgxMultiselectModule } from '@ngx-lib/multiselect';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
 import { CategoriesListComponent } from "./categories-list/categories-list.component";

@@ -1,24 +1,42 @@
 <div class="details_page">
     <div *ngIf="!product">No product</div>
     <div class="product" *ngIf="product">
-        <div class="product-image">
-            <app-carousel [images_product]="product_images" [autoSlide]="true" [controls_2]="true"></app-carousel>
-        </div>
-        <div class="product-info">
-            <div class="title">
-                <h3>{{product.name}}</h3>
-                <p class="price">Price: {{product.price}} €</p>
-            </div>
-            <div class="product-bio">
-                <div class="description"><strong>Description: </strong>{{product.description}}.</div>
-                <div class="category"><strong>Category: </strong>{{product.name_cat}}.</div>
-                <div class="state"><strong>State: </strong>{{product.state}}.</div>
-            </div>
-            <!-- <div class="author" [routerLink]="['/profile', product.author.username]"> -->
-                <!-- <img class="author-avatar" src="{{product.author.image}}"> -->
-                <!-- <p>{{product.author.username}}</p> -->
-            <!-- </div> -->
-        </div>
+        <table>
+            <tr>
+                <td class="image">
+                    <div class="product-image">
+                        <app-carousel [images_product]="product_images" [autoSlide]="true" [controls_2]="true"></app-carousel>
+                    </div>
+                </td>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <td class="info">
+                    <div class="product-info">
+                        <div class="title">
+                            <h3>{{product.name}}</h3>
+                            
+                        </div>
+                        <div class="product-bio">
+                            <div class="description"><strong>Description: </strong>{{product.description}}.</div>
+                            <div class="category"><strong>Category: </strong>{{product.name_cat}}.</div>
+                            <div class="state"><strong>State: </strong>{{product.state}}.</div>
+                        </div>
+                        <div class="price">
+                            <h3 class="price">Price: {{product.price}} €</h3>
+                        </div>
+                        
+                        <!-- <div class="author" [routerLink]="['/profile', product.author.username]"> -->
+                            <!-- <img class="author-avatar" src="{{product.author.image}}"> -->
+                            <!-- <p>{{product.author.username}}</p> -->
+                        <!-- </div> -->
+                    </div>
+                </td>
+            </tr>
+        </table>
         <!-- <div class="product_like">
             <app-favorite-button [product]="product"></app-favorite-button>
         </div> -->

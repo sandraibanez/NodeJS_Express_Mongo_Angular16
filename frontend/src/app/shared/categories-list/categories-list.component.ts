@@ -30,7 +30,6 @@ export class CategoriesListComponent implements OnInit {
     this.CategoryService.get_categories(params).subscribe({
       next: data => {
         this.categories = this.categories.concat(data);
-        // console.log(data);
         this.offset = this.offset + 3;
       },
       error: e => console.error(e)

@@ -89,20 +89,6 @@ export class ProductsListComponent implements OnInit {
       this.get_list_filtered(this.filters);
     }
   }
-  // get_products():void{
-  //   this.ProductService.getAll().subscribe({
-  //     next: data => {
-  //       this.ProductService.products =  data;
-  //       this.listProducts = data;
-  //       console.log(data);
-  //     },
-  //     error: e => console.error(e)
-  //   });
-  //   this.ProductService.products$.subscribe({
-  //     next: data => this.products = data,
-  //     error: e => console.error(e)
-  //   });
-  //}
   get_list_filtered(filters: Filters) {
     this.filters = filters;
     this.ProductService.get_products(filters).subscribe(

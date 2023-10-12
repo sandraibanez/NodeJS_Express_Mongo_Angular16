@@ -1,6 +1,10 @@
 .shop-page {
   width: 100%;
   margin-top: 2%;
+  // background-color:#8290FD ;
+  background-image: linear-gradient(to bottom, #8290FD,#96A2FF);
+
+  // A7B1FE
 }
 
 .container_list {
@@ -30,6 +34,10 @@
   display: flex;
   list-style: none;
   border-radius: 0.25rem;
+  background-color: #F2F2F2;
+  border: 1px solid #2196F3;
+  padding: 10px;
+  background-image: linear-gradient(to bottom, #FFC78B,#FDB182);
 }
 
 .pagination nav {
@@ -37,7 +45,6 @@
   margin: auto;
   margin-top: 4%;
 }
-
 @media screen and (max-width: 576px) {
 
   .container_list {
@@ -132,4 +139,49 @@
     margin-top: 0%;
   }
 
+}
+@media screen and (max-width: 576px) {
+
+  .pagination {
+    flex-direction: column;
+  }
+
+  .pagination nav {
+    margin-top: 2%;
+  }
+}
+
+@media screen and (min-width: 577px) {
+
+  .pagination {
+    flex-direction: column;
+  }
+
+  .pagination nav {
+    margin-top: 2%;
+  }
+}
+
+@media screen and (min-width: 993px) {
+
+  .pagination {
+    flex-direction: row;
+  }
+
+  .pagination nav {
+    margin-top: 0%;
+  }
+}
+
+.pagination li {
+  margin: 0 10px;
+  padding: 5px 10px;
+  font-size: 16px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.pagination li.active {
+  background-color: #2196F3;
+  color: #FFF;
 }

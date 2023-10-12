@@ -51,11 +51,6 @@ private productsList = new BehaviorSubject<Product[]>([]);
   set products(data: Product[]) {
     this.productsList.next(data);
   }
-  // ----------------------------------------------------------------
-  // get_products_from_category(slug: String): Observable<{}> {
-  //   return this.apiService.get_products('products/category/', slug);
-  // }
-  // ----------------------------------------------------------------
   get_products_from_category(slug: String, params: any): Observable<{products: Product[], product_count: number}> {
     return this.apiService.get_products('products/category/', slug, new HttpParams({fromObject:params}));
   }

@@ -15,7 +15,6 @@ async function get_carousel_product (req, res) {
         const slug = req.params.slug
         const product = await Product.findOne({ slug: slug });
         const productcarousel = await product.toProductCarouselResponse();
-        // res.json(await product.map(c => c.toProductCarouselResponse()));
         res.json(await productcarousel);
     } catch (error) {
         res.status(500).send({message: "An error has ocurred"});

@@ -22,7 +22,6 @@ export class FiltersComponent {
 
   options: Array<any> = [];
   selected_state: Array<any> = [];
-  states: Array<any> = [];
   states2:String = "";
 
   @Input() listCategories: Category[] | undefined;
@@ -80,7 +79,6 @@ export class FiltersComponent {
   }
 
   public filter_products() {
-    // console.log(this.liststates);
     this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
     if (this.routeFilters) {
       this.filters = new Filters();
@@ -96,13 +94,9 @@ export class FiltersComponent {
     for (let row in this.selected_state) {
       res_estados.push(this.selected_state[row].name);
     }
-    this.states = res_estados ? res_estados : [];     
-
-    // if (this.states) {
-    //   this.filters.state = this.states;
-    // }
-    if (this.states) {
-      this.filters.state = [this.states2]; // Convierte la cadena en un arreglo de un solo elemento
+   
+    if (this.states2) {
+      this.filters.state = [this.states2]; 
     }
     this.price_calc(this.price_min, this.price_max);
     this.filters.price_min = this.price_min ? this.price_min : undefined;
