@@ -12,11 +12,10 @@ const bcrypt = require('bcrypt');
 // @return User
 async function registerUser (req, res) {
     const { user } = req.body;
-    console.log(user);
+
     if (!user||!user.username ||!user.email||!user.password ) {
         return res.status(400).json({message: "All fields are required"});
     }
-//    console.log(req.body.password);
     
     // hash password
     const hashedPwd = await bcrypt.hash(user.password, 10); // salt rounds
@@ -74,17 +73,16 @@ async function getCurrentUser  (req, res) {
 // @access Public
 // @required fields {email, password}
 // @return User
-const userLogin = asyncHandler(async (req, res) => {
+async function userLogin  (req, res) {
     const { user } = req.body;
-
+   
     // confirm data
     if (!user || !user.email || !user.password) {
         return res.status(400).json({message: "All fields are required"});
     }
-    
     const loginUser = await User.findOne({ email: user.email }).exec();
     
-    console.log(loginUser);
+    console.log("loginUser",loginUser);
 
     if (!loginUser) {
         return res.status(404).json({message: "User Not Found"});
@@ -97,8 +95,7 @@ const userLogin = asyncHandler(async (req, res) => {
     res.status(200).json({
         user: loginUser.toUserResponse()
     });
-
-});
+};
 // @desc update currently logged-in user
 // Warning: if password or email is updated, client-side must update the token
 // @route PUT /api/user
@@ -106,7 +103,7 @@ const userLogin = asyncHandler(async (req, res) => {
 // @return User
 async function updateUser  (req, res)  {
     const { user } = req.body;
-
+    console.log("user update backen",user);
     // confirm data
     if (!user) {
         return res.status(400).json({message: "Required a User object"});
@@ -133,7 +130,7 @@ async function updateUser  (req, res)  {
         target.bio = user.bio;
     }
     await target.save();
-
+    console.log("target update", target);
     return res.status(200).json({
         user: target.toUserResponse()
     });

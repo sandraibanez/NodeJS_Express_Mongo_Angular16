@@ -24,6 +24,7 @@
     "mdb-angular-ui-kit": "^5.0.0",
     "mdb-ui-kit": "^6.4.2",
     "ng-multiselect-dropdown": "^1.0.0",
+    "ngx-bootstrap-icons": "^1.9.2",
     "ngx-infinite-scroll": "^16.0.0",
     "ngx-toastr": "^17.0.2",
     "rxjs": "~7.8.0",

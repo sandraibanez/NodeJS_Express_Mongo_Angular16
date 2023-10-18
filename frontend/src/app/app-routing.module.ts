@@ -14,18 +14,18 @@ const routes: Routes = [
     path: 'shop',
     loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule)
   },
-  // {
-  //   path: 'auth',
-  //   loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  // },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
   // {
   //   path: 'profile',
   //   loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
   // },
-  // {
-  //   path: 'settings',
-  //   loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
-  // },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
+  },
   {
     path: 'details',
     loadChildren: () => import('./details/details.module').then(m => m.DetailsModule)

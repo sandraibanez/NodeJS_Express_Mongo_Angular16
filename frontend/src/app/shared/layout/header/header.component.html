@@ -8,12 +8,17 @@
     </div>
     <nav>
       <a class="icon" (click)="nav_bars()"><i class="fa fa-bars"></i></a>
-      <!-- <div class="nav_buttons" [ngClass]="{'responsive': !bars, 'visible': bars}"> -->
+      <div class="nav_buttons" [ngClass]="{'responsive': !bars, 'visible': bars}" *appShowAuthed="false">
+          <button routerLink="home">Home</button>
+          <button routerLink="shop">Shop</button>
+          <button routerLink="auth/login">Login</button>
+      </div>
+      <div class="nav_buttons" [ngClass]="{'responsive': !bars, 'visible': bars}" *appShowAuthed="true">
         <button routerLink="home">Home</button>
         <button routerLink="shop">Shop</button>
-        <!-- <button routerLink="auth/login" *appShowAuthed="false">Login</button> -->
-        <!-- <button routerLink="profile/{{currentUser.username}}" *appShowAuthed="true">Profile</button> -->
-      <!-- </div> -->
+        <button routerLink="profile/{{currentUser.username}}">Profile</button>
+        <button routerLink="settings">Settings</button>
+      </div>
     </nav>
   </div>
 </header>

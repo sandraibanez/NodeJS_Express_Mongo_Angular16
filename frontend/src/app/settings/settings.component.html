@@ -1,0 +1,33 @@
+<section class="settings-container">
+    <h1 class="text-center" id="settings-title">Editar Perfil</h1>
+    <form class="d-flex justify-content-center" [formGroup]="settingsForm" (ngSubmit)="submitForm()">
+        <fieldset [disabled]="isSubmitting">
+            <!-- <legend>   
+                <img [src]="'../../../../assets/images/'+user.image" [routerLink]="['/profile', user.username]"  class="rounded-circle w-25 h-25 mx-auto d-block"   onerror="this.src='https://imagenes.lainformacion.com/files/image_606_387/uploads/imagenes/2019/12/17/5df8c3ce1b117.jpeg'"/>
+            </legend> -->
+            <div class="form-group">
+                <label for="username" class="etiqueta">Username:</label>
+                <textarea class="form-control" id="username" type="8" placeholder="Username" formControlName="username"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="email" class="etiqueta">Email:</label>
+                <textarea class="form-control" id="email" type="8" placeholder="Email" formControlName="email"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="bio" class="etiqueta">Biography:</label>
+                <textarea class="form-control" id="bio" rows="8" placeholder="Short bio about you" formControlName="bio"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image" class="etiqueta">Profile image:</label>
+                <textarea class="form-control" id="image" placeholder="Short bio about you" accept="image/png,  image/jpeg" formControlName="image"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="password" class="etiqueta">Password:</label>
+                <textarea class="form-control" id="password" type="password" placeholder="New Password" formControlName="password"></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" id="modify_btn" type="submit">Modificar Datos</button>
+            </div>
+        </fieldset>
+    </form>
+  </section>

@@ -22,7 +22,7 @@ async function findAll_category (req, res) {
   try {
     const { offset, limit } = req.query;
     const categories = await Category.find({}, {}, { skip: Number(offset), limit: Number(limit) }).populate('products');
-    console.log(categories);
+    // console.log(categories);
     res.json(categories.map(category => category.tocategoryresponse()));
   } catch (error) {
     res.status(400).send({ message: "Some error occurred while retrieving categorys." });
@@ -39,7 +39,7 @@ async function findOne_category  (req, res){
           res.json(category.tocategoryresponse());
       };
   } catch (error) {
-    console.log(error);
+    // console.log(error);
       if (error.kind === 'ObjectId') {res.status(404).send({message: `Category not found!`}); }
       else {res.status(500).send({message: "An error has ocurred"});}
   }

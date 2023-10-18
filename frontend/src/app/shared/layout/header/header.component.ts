@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewContainerRef, Input} from '@angular/core';
 import { Router } from '@angular/router';
 
-// import { User, UserService } from '../../../core';
+import { User, UserService } from '../../../core';
 
 @Component({
   selector: 'app-header',
@@ -10,28 +10,29 @@ import { Router } from '@angular/router';
 })
 
 export class HeaderComponent implements OnInit {
-
+@Input() indicators = false;
   bars: Boolean = false;
-
+  condition:boolean = false;
   constructor(
-    // private userService: UserService,
+    // private templateRef: TemplateRef<any>,
+    private userService: UserService,
     private cd: ChangeDetectorRef,
     private router: Router
   ) {}
-
-  // currentUser: User;
+ 
+  currentUser!: User;
 
   ngOnInit() {
-    // this.userService.currentUser.subscribe(
-    //   (userData) => {
-    //     this.currentUser = userData;
-    //     this.cd.markForCheck();
-    //   }
-    // );
+    this.userService.currentUser.subscribe(
+      (userData) => {
+        this.currentUser = userData;
+        this.cd.markForCheck();
+      }
+    );
   }
 
   logout() {
-    // this.userService.purgeAuth();
+    this.userService.purgeAuth();
     this.router.navigateByUrl('/');
   }
 
