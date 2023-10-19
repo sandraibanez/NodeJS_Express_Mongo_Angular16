@@ -111,6 +111,7 @@ export class FiltersComponent {
     this.price_min = undefined;
     this.price_max = undefined;
     this.selected_state = [];
+    this.states2= '';
     this.filter_products();
     setTimeout(() => { this.Router.navigate(['/shop']); }, 200);
   }

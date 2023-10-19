@@ -69,7 +69,6 @@ export class UserService {
     console.log('credentials->user.service.ts resgistro',credentials);
     return this.apiService.post(`user/register`, { user: credentials }).pipe(
       map((data) => {
-        // this.setAuth(data.user);
         console.log(data);
         return data;
       })
@@ -92,9 +91,8 @@ export class UserService {
     return this.apiService.put('user/settings', { user }).pipe(
       map((data) => {
         // Update the currentUser observable
-        console.log(data);
-        this.currentUserSubject.next(data);
-        return data;
+        this.currentUserSubject.next(data.user);
+        return data.user;
       })
     );
   }
