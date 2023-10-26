@@ -14,11 +14,22 @@
           <button routerLink="auth/login">Login</button>
       </div>
       <div class="nav_buttons" [ngClass]="{'responsive': !bars, 'visible': bars}" *appShowAuthed="true">
+        
         <button routerLink="home">Home</button>
+     
         <button routerLink="shop">Shop</button>
+      
         <button routerLink="profile/{{currentUser.username}}">Profile</button>
+        
         <button routerLink="settings">Settings</button>
+        
         <button class="btn btn-outline-danger"(click)="logout()">logout</button>
+        <a class="nav-link"
+          [routerLink]="['/profile', currentUser.username]"
+          routerLinkActive="active">
+          <img src="../../../../assets/img/{{currentUser.image}}" *ngIf="currentUser.image" class="user-pic" alt="user image">
+          <p>{{ currentUser.username }}</p>
+        </a>
       </div>
     </nav>
   </div>

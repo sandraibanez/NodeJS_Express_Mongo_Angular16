@@ -3,6 +3,7 @@ const Product = mongoose.model('Product');
 const Category = require("../models/category.model.js");
 const categoryModel = require('../models/category.model.js');
 const asyncHandler = require("express-async-handler");
+const User = require("../models/user.model.js");
 async function getall_products(req, res) {
     try {
 
@@ -18,9 +19,9 @@ async function getall_products(req, res) {
         let state = transUndefined(req.query.state, "");
         let price_min = transUndefined(req.query.price_min, 0);
         let price_max = transUndefined(req.query.price_max, Number.MAX_SAFE_INTEGER);
-        // let favorited = transUndefined(req.query.favorited, null);
-        // let author = transUndefined(req.query.author, null);
-        // let id_user = req.auth ? req.auth.id : null;
+        let favorited = transUndefined(req.query.favorited, null);
+        let author = transUndefined(req.query.author, null);
+        let id_user = req.auth ? req.auth.id : null;
         let nameReg = new RegExp(name);
     
         query = {
@@ -34,18 +35,18 @@ async function getall_products(req, res) {
         if (category != "") {
           query.id_category = category;
         }
-        // if (name != "") {
-        //   query.name = name;
-        // }
-        // if (favorited) {
-        //   const favoriter = await User.findOne({ username: favorited });
-        //   query._id = { $in: favoriter.favorites };
-        // }
+        if (name != "") {
+          query.name = name;
+        }
+        if (favorited) {
+          const favoriter = await User.findOne({ username: favorited });
+          query._id = { $in: favoriter.favorites };
+        }
     
-        // if (author) {
-        //   const author1 = await User.findOne({ username: author });
-        //   query.author = { $in: author1._id };
-        // }
+        if (author) {
+          const author1 = await User.findOne({ username: author });
+          query.author = { $in: author1._id };
+        }
     
         const products = await Product.find(query).sort("name").limit(Number(limit)).skip(Number(offset));
         const product_count = await Product.find(query).countDocuments();
@@ -63,12 +64,17 @@ async function getall_products(req, res) {
 }//getall_products
 async function getone_product(req, res) {
     try {
+      const id = req.userId;
+
+      const author = await User.findById(id).exec();
         const slug = req.params.slug
         const product = await Product.findOne({ slug: slug });
         if (!product) {
             res.status(404).json(FormatError("Product not found", res.statusCode));
         } else {
-            res.json(product);
+          // const products = await product.toproductresponse(author);
+          res.json(await product.toproductresponse(author));
+          // console.log('products',products);
         };
     } catch (error) {
         if (error.kind === 'ObjectId') { res.status(404).json(FormatError("Product not found", res.statusCode)); }
@@ -78,6 +84,10 @@ async function getone_product(req, res) {
 
 async function create_product(req, res) {
     try {
+      const id = req.userId;
+
+    const author = await User.findById(id).exec();
+
         const product_data = {
             name: req.body.name || null,
             price: req.body.price || 0,
@@ -86,26 +96,29 @@ async function create_product(req, res) {
             name_cat: req.body.name_cat || null,
             state: req.body.state || null,
             location: req.body.location || null,
-            product_images: req.body.product_images || null
-            
+            product_images: req.body.product_images || null,
+            author: req.body.author || null
         };
     console.log(product_data.id_category);
+    // const { title, body, tagList } = req.body.article;
+
+    // confirm data
+    if ( !product_data ) {
+        res.status(400).json({message: "All fields are required"});
+    }
     const category = await Category.findOne({ slug: product_data.id_category });
 
     const product = new Product(product_data);
-
+    product.author = id;
     await product.save();
-
     category.products.push(product._id);
-
     await category.save();
-
-    res.json(await product.toproductresponse());
+    res.json(await product.toproductresponse(author));
       } catch (error) {
         res.status(500).send({message: error.message || "Some error occurred while creating the Product."});
       }
 }//create_product
-// --------------------------------------------------------
+
 readProductsWithCategory = asyncHandler(async (req, res) => {
    
 const { slug } = req.params;
@@ -138,7 +151,6 @@ try {
    });
   
 
-// ---------------------------------------------------------
 
 async function delete_product(req, res) {
         try {
@@ -172,6 +184,9 @@ async function delete_product(req, res) {
 async function update_product(req, res) {
     
     try {
+        const  userId  = req.userId;
+        const loginUser = await User.findById(userId).exec();
+        // const author = await User.findById(id).exec();
         const slug = req.params.slug
         const old_product = await Product.findOne({ slug: slug });
         if (old_product.name !== req.body.name && req.body.name !== undefined) {
@@ -187,13 +202,16 @@ async function update_product(req, res) {
         old_product.product_images = req.body.product_images || null
      
         const update = await old_product.save();
-
+        // const update =  res.json(await old_product.toproductresponse(loginUser));
         if (!update) { res.status(404).json(FormatError("Product not found", res.statusCode)); } else {
-            res.json({ msg: "Product updated" })
+            // res.json({ msg: "Product updated" })
+            return res.status(200).json({
+              product: await old_product.toproductresponse(loginUser)
+          })
         }
+       
     } catch (error) {
-        if (error.kind === 'ObjectId') { res.status(404).json(FormatError("Product not found", res.statusCode)); }
-        else { res.status(500).json(FormatError("An error has ocurred", res.statusCode)); }
+      res.status(500).send({message: error.message || "Some error occurred while creating the Product."});
     }
 }//update_product
 
@@ -206,6 +224,166 @@ async function deleteAll_product(req, res) {
       }
 }//deleteAll_product
 
+// Favorite a product
+async function favorite  (req, res) {
+  const id = req.userId;
+  console.log(id);
+  const { slug } = req.params;
+  console.log(slug);
+  const loginUser = await User.findById(id).exec();
+  console.log(loginUser);
+  if (!loginUser) {
+      return res.status(401).json({
+          message: "User Not Found"
+      });
+  }
+  
+  const product = await Product.findOne({slug}).exec();
+  
+  if (!product) {
+      return res.status(401).json({
+          message: "product Not Found"
+      });
+  }
+  // console.log(`product info ${product}`);
+
+  await loginUser.favorite(product._id);
+  
+  const updatedproduct = await product.updateFavoriteCount();
+
+  return res.status(200).json({
+    product: await updatedproduct.toproductresponse(loginUser)
+  });
+};
+
+// Unfavorite a product
+async function unfavorite (req, res) {
+  const id = req.userId;
+  console.log(id);
+  const { slug } = req.params;
+  console.log(slug);
+  const loginUser = await User.findById(id).exec();
+  console.log(loginUser);
+  if (!loginUser) {
+      return res.status(401).json({
+          message: "User Not Found"
+      });
+  }
+
+  const product = await Product.findOne({slug}).exec();
+
+  if (!product) {
+      return res.status(401).json({
+          message: "product Not Found"
+      });
+  }
+
+  await loginUser.unfavorite(product._id);
+
+  await product.updateFavoriteCount();
+
+  return res.status(200).json({
+    product: await product.toproductresponse(loginUser)
+  });
+};
+
+async function get_favorites (req, res)  {
+  try {
+    const id = req.userId;
+  // console.log(id);
+  const loginUser = await User.findById(id).exec();
+  console.log("loginUser",loginUser);
+  if (!loginUser) {
+      return res.status(401).json({
+          message: "User Not Found"
+      });
+  }
+    const products = await Product.find({_id: User.favorites}).sort("name").populate("author");
+    console.log("products",products);
+    if (products) {
+      return res.json(products.map(product => product.toproductresponse(User)));
+    } else {
+      res.status(404).json({msg: "No products favorited"});
+    }
+  } catch (error) {
+    res.status(500).json({msg: "An error has ocurred"});
+  }
+};
+
+// async function find_products_user  (req, res) {
+//   try {
+//     const id = req.userId;
+//     const user = await User.findById(id).exec();
+//     // console.log(user);
+//     if (!user) {
+//       return res.status(401).json({
+//         message: "User Not Found"
+//       });
+//     }
+
+//     const products = await Product.find({ author: user._id }).exec();
+//     // console.log('products',products);
+//     if (!products) {
+//       return res.status(404).json({
+//         message: "Products Not Found"
+//       });
+//     }
+//     // return res.json(products.map(product => product.toJSONAuthorFor(user)));
+//     const productsWithFullData = await Promise.all(products.map(async product => {
+//       return await product.toproductresponse(user);
+//     }));
+
+//     return res.status(200).json({ products });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({message: "An error has ocurred"});
+//   }
+// }
+async function find_products_user  (req, res) {
+  // try {
+  //   const id = req.userId;
+  //   const user = await User.findById(id).exec();
+
+  //   if (!user) {
+  //     return res.status(401).json({
+  //       message: "User Not Found"
+  //     });
+  //   }
+
+  //   const products = await Product.find({ author: user._id }).exec();
+
+  //   if (!products) {
+  //     return res.status(404).json({
+  //       message: "Products Not Found"
+  //     });
+  //   }
+
+  //   const productsWithFullData = await Promise.all(products.map(async product => {
+  //     return await product.toproductresponse(user);
+  //   }));
+
+  //   return res.status(200).json({ products: productsWithFullData });
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).send({message: "An error has ocurred"});
+  // }
+  try {
+    const user = await User.findById(req.auth.id);
+    if (user) {
+      const products = await Product.find({ author: user._id }).sort("name").populate("author");
+      if (!products) {
+        res.status(404).send({message: `Product not found!`});
+      } else {
+        return res.json(products.map(product => product.toJSONAuthorFor(user)));
+      };
+    } else {
+      res.status(404).send({message: `User not found!`});
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({message: "An error has ocurred"});
+  }
+}
 const product_controller = {
     getall_products: getall_products,
     getone_product: getone_product,
@@ -213,7 +391,11 @@ const product_controller = {
     delete_product: delete_product,
     update_product: update_product,
     deleteAll_product: deleteAll_product,
-    readProductsWithCategory
+    readProductsWithCategory,
+    favorite:favorite,
+    unfavorite:unfavorite,
+    get_favorites:get_favorites,
+    find_products_user:find_products_user
 }
 
 module.exports = product_controller

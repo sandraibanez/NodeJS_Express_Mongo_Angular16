@@ -4,7 +4,20 @@ header {
     padding: 1em 0;
     margin-bottom: 1em;
 }
-
+.nav_buttons img{
+    border-radius: 50%;
+    width: 7%;
+    height: 13%;
+    position: absolute;
+    left:600px;
+    top: 20px;
+  }
+.nav_buttons p{
+    color:aliceblue;
+    position: absolute;
+    left:615px;
+    top: 90px;
+}
 .header-container {
     display: grid;
     gap: 10px;

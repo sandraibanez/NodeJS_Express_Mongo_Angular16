@@ -17,10 +17,10 @@ import { FiltersComponent } from './filters/filters.component';
 import { SearchComponent } from './search/search.component';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { ProfileProductsComponent } from './profile-products/profile-products.component';
-// import { ProfileFavoritesComponent } from './profile-favorites/profile-favorites.component';
+import { ProfileFavoritesComponent } from './profile-favorites/profile-favorites.component';
 import { CardProductComponent } from './card-product/card-product.component';
-// import { FollowButtonComponent, FavoriteButtonComponent } from './buttons';
-
+import { FollowButtonComponent, FavoriteButtonComponent } from './buttons';
+// import { FavoriteButtonComponent } from './buttons';
 @NgModule({
     imports: [
         CommonModule,
@@ -46,10 +46,10 @@ import { CardProductComponent } from './card-product/card-product.component';
         // CommentsComponent,
         SearchComponent,
         ProfileProductsComponent,
-        // ProfileFavoritesComponent,
-        CardProductComponent
-        // FollowButtonComponent,
-        // FavoriteButtonComponent
+        ProfileFavoritesComponent,
+        CardProductComponent,
+        FollowButtonComponent,
+        FavoriteButtonComponent
     ],
     exports: [
         CategoriesListComponent,
@@ -64,10 +64,10 @@ import { CardProductComponent } from './card-product/card-product.component';
         // CommentsComponent,
         SearchComponent,
         ProfileProductsComponent,
-        // ProfileFavoritesComponent,
-        CardProductComponent
-        // FollowButtonComponent,
-        // FavoriteButtonComponent
+        ProfileFavoritesComponent,
+        CardProductComponent,
+        FollowButtonComponent,
+        FavoriteButtonComponent
     ],
     
 })

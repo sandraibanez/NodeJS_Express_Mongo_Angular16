@@ -15,7 +15,6 @@ export class AuthComponent implements OnInit {
   authType: String = '';
   title: String = '';
   isSubmitting = false;
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -54,11 +53,17 @@ export class AuthComponent implements OnInit {
       console.log(this.UserService.login(credentials));
       this.UserService.login(credentials).subscribe({
         next: data => {
-          this.ToastrService.success("Loged succesfully");
+          this.ToastrService.success("Loged succesfully","Loged succesfully",{positionClass: 'toast-top-center',
+          closeButton: true,
+          timeOut: 5000,
+          progressBar: true});
           this.router.navigateByUrl('/');
         },
         error: e => {
-          this.ToastrService.error("Wrong password or username, please try again");
+          this.ToastrService.error("Wrong password or username, please try again","error",{positionClass: 'toast-top-center',
+          closeButton: true,
+          timeOut: 5000,
+          progressBar: true});
           this.isSubmitting = false;
           this.cd.markForCheck();
         }
@@ -68,10 +73,16 @@ export class AuthComponent implements OnInit {
       this.UserService.register(credentials).subscribe({
         next: data => {
           if (data.username === undefined) {
-            this.ToastrService.error("This user or email is already in use");
+            this.ToastrService.error("This user or email is already in use","This user or email is already in use",{positionClass: 'toast-top-center',
+            closeButton: true,
+            timeOut: 5000,
+            progressBar: true});
             this.isSubmitting = false;
           } else {
-            this.ToastrService.success("Registered successfully, please login now");
+            this.ToastrService.success("Registered successfully, please login now","Registered successfully, please login now",{positionClass: 'toast-top-center',
+            closeButton: true,
+            timeOut: 5000,
+            progressBar: true});
             setTimeout(() => {
               this.router.navigate(['/auth/login']);
             }, 3000);

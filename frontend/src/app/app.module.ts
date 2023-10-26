@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { FooterComponent, HeaderComponent, SharedModule } from './shared';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
+import { heart } from 'ngx-bootstrap-icons';
 // Toastr
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
+const icons = {
+  heart
+ };
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
+    FontAwesomeModule,
     SharedModule,
     AppRoutingModule,
     HttpClientModule,
@@ -34,7 +38,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       preventDuplicates: true,
       maxOpened: 2,
       progressBar: true,
-    }),
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

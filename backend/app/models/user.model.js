@@ -28,10 +28,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "https://static.productionready.io/images/smiley-cyrus.jpg"
     },
-    favouriteArticles: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Article'
-    }],
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Products' }],
     followingUsers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -70,6 +67,7 @@ userSchema.methods.toUserResponse = function() {
 };
 
 userSchema.methods.toProfileJSON = function (user) {
+    console.log("user user",user);
     return {
         username: this.username,
         bio: this.bio,
@@ -104,7 +102,7 @@ userSchema.methods.unfollow = function (id) {
 
 userSchema.methods.isFavourite = function (id) {
     const idStr = id.toString();
-    for (const article of this.favouriteArticles) {
+    for (const article of this.favorites) {
         if (article.toString() === idStr) {
             return true;
         }
@@ -113,8 +111,8 @@ userSchema.methods.isFavourite = function (id) {
 }
 
 userSchema.methods.favorite = function (id) {
-    if(this.favouriteArticles.indexOf(id) === -1){
-        this.favouriteArticles.push(id);
+    if(this.favorites.indexOf(id) === -1){
+        this.favorites.push(id);
     }
 
     // const article = await Article.findById(id).exec();
@@ -127,8 +125,8 @@ userSchema.methods.favorite = function (id) {
 }
 
 userSchema.methods.unfavorite = function (id) {
-    if(this.favouriteArticles.indexOf(id) !== -1){
-        this.favouriteArticles.remove(id);
+    if(this.favorites.indexOf(id) !== -1){
+        this.favorites.remove(id);
     }
 
     // const article = await Article.findById(id).exec();

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './auth.component';
-console.log('auth-routing.module');
+// console.log('auth-routing.module');
 const routes: Routes = [
   {
     path: 'register',

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Profile } from '../models';
 import { map } from 'rxjs/operators';
 
-const URL = 'http://localhost:3000/api/profile';
+const URL = 'http://127.0.0.1:3001/api/profile';
 
 @Injectable({
     providedIn: 'root'

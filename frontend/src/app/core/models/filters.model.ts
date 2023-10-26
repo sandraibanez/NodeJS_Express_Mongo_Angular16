@@ -34,16 +34,16 @@ export class Filters {
     this.author = author;
   }
 
-  public length(): number {
-    let count: number = 0;
-    if (this.name) count++;
-    if (this.price_min) count++;
-    if (this.price_max) count++;
-    if (this.location) count++;
-    if (this.category) count++;
-    if (this.state) count++;
-    if (this.favorited) count++;
-    if (this.author) count++;
-    return count;
-  }
+  // public length(): number {
+  //   let count: number = 0;
+  //   if (this.name) count++;
+  //   if (this.price_min) count++;
+  //   if (this.price_max) count++;
+  //   if (this.location) count++;
+  //   if (this.category) count++;
+  //   if (this.state) count++;
+  //   if (this.favorited) count++;
+  //   if (this.author) count++;
+  //   return count;
+  // }
 }

@@ -25,21 +25,45 @@
                             <div class="category"><strong>Category: </strong>{{product.name_cat}}.</div>
                             <div class="state"><strong>State: </strong>{{product.state}}.</div>
                         </div>
+                        
                         <div class="price">
                             <h3 class="price">Price: {{product.price}} €</h3>
                         </div>
                         
-                        <!-- <div class="author" [routerLink]="['/profile', product.author.username]"> -->
-                            <!-- <img class="author-avatar" src="{{product.author.image}}"> -->
-                            <!-- <p>{{product.author.username}}</p> -->
-                        <!-- </div> -->
+                        <div class="author" [routerLink]="['/profile', product.author.username]">
+                            <img class="author-avatar" src="{{product.author.image}}">
+                            <p>{{product.author.username}}</p>
+                        </div>
+                        <span [hidden]="canModify">
+                            <app-follow-button
+                            [product]="product"
+                            [profile]="product.author"
+                            (toggle)="ToggleFollowing($event)">
+                          </app-follow-button>
+                            <!-- <i class="bi bi-balloon-heart"> -->
+                                    <app-favorite-button class="bi bi-balloon-heart" [product]="product" (toggle)="ToggleFavorite($event)">
+                                    {{ product.favorited ? 'Unfavorite' : 'Favorite' }} product 
+                                    
+                                    <span class="counter">({{ product.favoritesCount }})</span>
+                                    </app-favorite-button>
+                            <!-- </i> -->
+                        </span>
                     </div>
+
+                </td>
+                <td>
+                   
                 </td>
             </tr>
         </table>
         <!-- <div class="product_like">
             <app-favorite-button [product]="product"></app-favorite-button>
         </div> -->
+        <!-- <app-product-meta [product]="product"> -->
+  
+     
+  
+        <!-- </app-product-meta> -->
     </div>
 
     <!-- <div class="comments-section">

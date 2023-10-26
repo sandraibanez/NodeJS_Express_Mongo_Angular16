@@ -1,4 +1,4 @@
-// import { Profile } from './profile.model';
+import { Profile } from './profile.model';
 
 export interface Product {
   slug: String;
@@ -11,5 +11,6 @@ export interface Product {
   location: String;
   product_images: String[];
   favorited: boolean;
-  // author: Profile;
+  favoritesCount: number;
+  author: Profile;
 }
