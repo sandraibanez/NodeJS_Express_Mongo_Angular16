@@ -4,6 +4,7 @@ const Category = require("../models/category.model.js");
 const categoryModel = require('../models/category.model.js');
 const asyncHandler = require("express-async-handler");
 const User = require("../models/user.model.js");
+
 async function getall_products(req, res) {
     try {
 
@@ -182,37 +183,41 @@ async function delete_product(req, res) {
 }//delete_product
 
 async function update_product(req, res) {
-    
-    try {
-        const  userId  = req.userId;
-        const loginUser = await User.findById(userId).exec();
-        // const author = await User.findById(id).exec();
-        const slug = req.params.slug
-        const old_product = await Product.findOne({ slug: slug });
-        if (old_product.name !== req.body.name && req.body.name !== undefined) {
-            old_product.slug = null;
-        }//end if
-        old_product.name = req.body.name || old_product.name;
-        old_product.price = req.body.price || old_product.price;
-        old_product.description = req.body.description || old_product.description;
-        old_product.id_category = req.body.id_category || old_product.id_category;
-        old_product.name_cat = req.body.name_cat || null,
-        old_product.state = req.body.state || null,
-        old_product.locatio = req.body.location || null,
-        old_product.product_images = req.body.product_images || null
-     
-        const update = await old_product.save();
-        // const update =  res.json(await old_product.toproductresponse(loginUser));
-        if (!update) { res.status(404).json(FormatError("Product not found", res.statusCode)); } else {
-            // res.json({ msg: "Product updated" })
-            return res.status(200).json({
-              product: await old_product.toproductresponse(loginUser)
-          })
-        }
-       
-    } catch (error) {
-      res.status(500).send({message: error.message || "Some error occurred while creating the Product."});
+    const  userId  = req.userId;
+
+    const { products } = req.body;
+
+    if (!products) {
+      return res.status(400).json({message: "Required a products object"});
     }
+    const { slug } = req.params;
+
+    const loginUser = await User.findById(userId).exec();
+
+    const target = await Product.findOne({ slug }).exec();
+    console.log("products.price",products);
+    if (products.price) {
+      console.log("products.price",products.price);
+        target.price = products.price;
+    }else {
+      target.price = target.price;
+    }
+    if (products.description) {
+        target.description = products.description;
+    }else{
+      target.description = target.description;
+    }
+    if (products.state) {
+        target.state = products.state;
+    }else {
+      target.state =  target.state;
+    }
+  
+    await target.save();
+    // return res.status(200).json({
+    //   products: res.json(await target.toproductresponse(loginUser))
+    // });
+    res.json(await target.toproductresponse(loginUser));
 }//update_product
 
 async function deleteAll_product(req, res) {
@@ -292,14 +297,14 @@ async function get_favorites (req, res)  {
     const id = req.userId;
   // console.log(id);
   const loginUser = await User.findById(id).exec();
-  console.log("loginUser",loginUser);
+  // console.log("loginUser",loginUser);
   if (!loginUser) {
       return res.status(401).json({
           message: "User Not Found"
       });
   }
     const products = await Product.find({_id: User.favorites}).sort("name").populate("author");
-    console.log("products",products);
+    // console.log("products",products);
     if (products) {
       return res.json(products.map(product => product.toproductresponse(User)));
     } else {

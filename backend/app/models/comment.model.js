@@ -1,19 +1,39 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const User = require('./user.model');
 
-var comment_schema = mongoose.Schema({
-    body: String,
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+const comment_schema = new mongoose.Schema({
+    body: {
+        type: String,
+        required: true
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' }
-}, { timestamps: true });
+},
+    {
+        timestamps: true
+    });
 
-// Requires population of author
-comment_schema.methods.toJSONFor = function () {
-    return {
-        id: this._id,
-        body: this.body,
-        createdAt: this.createdAt,
-        author: this.author.toProfileCommentJSON()
+
+    comment_schema.methods.toCommentResponse = async function (user) {
+        const authorObj = await User.findById(this.author).exec();
+        return {
+            id: this._id,
+            body: this.body,
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
+            author: authorObj.toProfileJSON(user)
+        }
+    
     };
-};
-
+    comment_schema.methods.toJSONFor = function () {
+        return {
+            id: this._id,
+            body: this.body,
+            createdAt: this.createdAt,
+            author: this.author.toProfileCommentJSON()
+        };
+    };
 module.exports = mongoose.model('Comment', comment_schema);

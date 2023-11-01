@@ -82,7 +82,7 @@ async function userLogin  (req, res) {
     }
     const loginUser = await User.findOne({ email: user.email }).exec();
     
-    console.log("loginUser",loginUser);
+    // console.log("loginUser",loginUser);
 
     if (!loginUser) {
         return res.status(404).json({message: "User Not Found"});
@@ -103,7 +103,7 @@ async function userLogin  (req, res) {
 // @return User
 async function updateUser  (req, res)  {
     const { user } = req.body;
-    console.log("user update backen",user);
+    // console.log("user update backen",user);
     // confirm data
     if (!user) {
         return res.status(400).json({message: "Required a User object"});
@@ -130,7 +130,7 @@ async function updateUser  (req, res)  {
         target.bio = user.bio;
     }
     await target.save();
-    console.log("target update", target);
+    // console.log("target update", target);
     return res.status(200).json({
         user: target.toUserResponse()
     });

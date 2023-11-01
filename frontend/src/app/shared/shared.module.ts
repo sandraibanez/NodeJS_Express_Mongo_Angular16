@@ -13,7 +13,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselItemsComponent } from './carousel-items/carousel-items.component';
 import { FiltersComponent } from './filters/filters.component';
-// import { CommentsComponent } from './comments/comments.component';
+import { CommentsComponent } from './comments/comments.component';
 import { SearchComponent } from './search/search.component';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { ProfileProductsComponent } from './profile-products/profile-products.component';
@@ -43,7 +43,7 @@ import { FollowButtonComponent, FavoriteButtonComponent } from './buttons';
         ProductDetailsComponent,
         ShowAuthedDirective,
         FiltersComponent,
-        // CommentsComponent,
+        CommentsComponent,
         SearchComponent,
         ProfileProductsComponent,
         ProfileFavoritesComponent,
@@ -61,7 +61,7 @@ import { FollowButtonComponent, FavoriteButtonComponent } from './buttons';
         ReactiveFormsModule,
         ShowAuthedDirective,
         FiltersComponent,
-        // CommentsComponent,
+        CommentsComponent,
         SearchComponent,
         ProfileProductsComponent,
         ProfileFavoritesComponent,

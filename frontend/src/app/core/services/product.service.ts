@@ -12,6 +12,8 @@ const URL = 'http://127.0.0.1:3001/api/products';
 })
 
 export class ProductService {
+  private currentProductSubject = new BehaviorSubject<Product>({} as Product);
+  // public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
   [x: string]: any;
   
   constructor(private http: HttpClient,  private apiService: ApiService) { }
@@ -63,9 +65,21 @@ private productsList = new BehaviorSubject<Product[]>([]);
     return this.http.post<Product[]>(URL, product);
   }
 
-  update_product(product: Product, id: String): Observable<Product[]> {
-    return this.http.put<Product[]>(`${URL}/${id}`, product);
+  get(slug: string): Observable<Product> {
+    return this.apiService.get('products/' + slug)
+      .pipe(map(data => data.product));
   }
+
+  update_product(product: Product): Observable<Product[]> {
+    // console.log(this.apiService.put('products/'+ product.slug, { products:product }));
+    return this.http.put<Product[]>(`${URL}/${product.slug}`, { products:product });
+    // return this.apiService.put('products/'+ product.slug, { products:product }).pipe(
+    //   map((data) => {
+    //     console.log(data.slug);
+    //     return data.slug;
+    //   })
+    // );
+   }
 
   delete_product(id: String): Observable<Product[]> {
     return this.http.delete<Product[]>(`${URL}/${id}`);

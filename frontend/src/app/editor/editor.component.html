@@ -1,0 +1,56 @@
+<div class="editor-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-10 offset-md-1 col-xs-12">
+
+        <form class="d-flex justify-content-center" [formGroup]="ProductForm" (ngSubmit)="submitForm()">
+          <fieldset [disabled]="isSubmitting">
+
+            <!-- <h3>Name</h3>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg"
+                formControlName="name"
+                type="text"
+                placeholder="Product Title" 
+                value="{{product_name}}" readonly/>
+            </fieldset> -->
+
+            <h3>Price</h3>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg"
+                formControlName="price"
+                type="number"
+                placeholder="Product Title" 
+                value="{{product_price}}"/>
+            </fieldset>
+
+            <h3>State</h3>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg"
+              formControlName="state"
+              type="text"
+              placeholder="Product Title" 
+              value="{{product_state}}"/>
+            </fieldset>
+
+            <h3>Description</h3>
+              <fieldset class="form-group">
+                <textarea class="form-control"
+                  formControlName="description"
+                  rows="8"
+                  placeholder="What's this product about?"
+                  value = "{{product_description}}">
+                  </textarea>
+              </fieldset>
+             
+              <div class="form-group">
+                <button class="btn btn-primary" id="modify_btn" type="submit">Modificar Datos</button>
+            </div>
+
+          </fieldset>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

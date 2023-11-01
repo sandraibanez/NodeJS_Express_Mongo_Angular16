@@ -95,7 +95,7 @@ product_schema.methods.toProductCarouselResponse = function(){
 }
 product_schema.methods.toproductresponse = async function(user){
     const authorObj = await User.findById(this.author).exec();
-    console.log("authorObj",authorObj);
+    // console.log("authorObj",authorObj);
     return {
         slug: this.slug,
         name: this.name,
@@ -113,7 +113,19 @@ product_schema.methods.toproductresponse = async function(user){
         author:  authorObj.toProfileJSON(user)
     };
 };
+product_schema.methods.addComment = function (commentId) {
+    if(this.comments.indexOf(commentId) === -1){
+        this.comments.push(commentId);
+    }
+    return this.save();
+};
 
+product_schema.methods.removeComment = function (commentId) {
+    if(this.comments.indexOf(commentId) !== -1){
+        this.comments.remove(commentId);
+    }
+    return this.save();
+};
 product_schema.methods.toJSONAuthorFor = function(user){
     return {
         slug: this.slug,

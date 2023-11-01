@@ -67,7 +67,7 @@ userSchema.methods.toUserResponse = function() {
 };
 
 userSchema.methods.toProfileJSON = function (user) {
-    console.log("user user",user);
+    // console.log("user user",user);
     return {
         username: this.username,
         bio: this.bio,
@@ -137,5 +137,10 @@ userSchema.methods.unfavorite = function (id) {
 
     return this.save();
 };
-
+userSchema.methods.toProfileCommentJSON = function () {
+    return {
+      username: this.username,
+      image: this.image || 'https://avatars.dicebear.com/api/personas/' + this.username + '.svg',
+    };
+  }
 module.exports = mongoose.model('User', userSchema);

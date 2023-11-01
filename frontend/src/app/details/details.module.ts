@@ -4,6 +4,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DetailsComponent } from './details.component';
 import { DetailsRoutingModule } from './details-routing.module';
 import { SharedModule } from '../shared';
+import { productCommentComponent } from './product-comment.component';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { SharedModule } from '../shared';
         DetailsRoutingModule, 
     ],
     declarations: [
-        DetailsComponent
+        DetailsComponent,
+        productCommentComponent
     ],
     providers: [
     ],

@@ -1,0 +1,13 @@
+<div class="comment initial">
+    <div class="comment-avatar-container" [routerLink]="['/profile', comment.author.username]">
+        <img class="comment-avatar" src="{{comment.author.image}}"/>
+    </div>
+    <h2 class="comment-title">Author: {{ comment.author.username }}</h2>
+    <p class="comment-text">{{ comment.body }}</p>
+    <p class="comment-time-stamp">{{ comment.createdAt | date: 'short'}}</p>
+    <div class="comment-delete-icon" *appShowAuthed="true">
+        <span class="mod-options" [hidden]="!canModify">
+        <i class="fa-solid fa-trash-can" (click)="deleteClicked()">delete</i>
+    </span>
+    </div>
+</div>
