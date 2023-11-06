@@ -77,5 +77,5 @@ Tener instalado las siguientes herramientas:
 # LIBRERÍAS
 Lista de librerías utilizadas en este proyecto:
 
-* [Toastr] (https://codeseven.github.io/toastr/)
-* [bootstrap] (https://getbootstrap.com/)
+* Toastr https://codeseven.github.io/toastr/
+* bootstrap https://getbootstrap.com/
