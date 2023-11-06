@@ -47,13 +47,18 @@ web y además se puede filtrar esta lista y la lista se encuentra paginada. Tamb
 producto deseado y ver una lista mas detallada de este, además, el usuario puede añadir algún comentario
 al producto y, en caso de que sea suyo, eliminarlo. También hay una opción de marcado de favoritos de
 cada producto si el usuario se encuentra logeado.
+Si el usuario que esta logeado no es el que ha creado el producto solo podra darle like al producto, seguir 
+al usuario que lo ha creado o visitar su profile.
+Si el usuario que esta logeado es el que ha creado el producto podra eliminarlo y editarlo.
+Solo se podra entrar al details de un producto si el usuario esta logeado.
 
 * Lista de productos
 * Filtros
-* Detalles del producto
 * Likes
+* Seguir a un usuario
 * Paginación
 * Comentarios
+* Detalles del producto
 
 
 # PUESTA EN MARCHA
