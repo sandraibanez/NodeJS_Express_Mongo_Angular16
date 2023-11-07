@@ -4,6 +4,7 @@ import { ProfileResolver } from './profile-resolver.service';
 import { ProfileComponent } from './profile.component';
 import { ProfileProductsComponent } from '../shared';
 import { ProfileFavoritesComponent } from '../shared/profile-favorites/profile-favorites.component';
+import { ProfileFollowersComponent } from '../shared/profile-follower/profile-follower.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path: 'favorites',
         component: ProfileFavoritesComponent
+      },
+      {
+        path: 'get_followers',
+        component: ProfileFollowersComponent
       }
     ]
   },

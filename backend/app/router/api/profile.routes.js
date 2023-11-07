@@ -10,5 +10,6 @@ const profile = require('../../controllers/profilesController.js');
 router.get('/:username', verifyJWT, profile.getProfile);
 router.post('/:username/follow', verifyJWT, profile.followUser);
 router.delete('/:username/follow', verifyJWT, profile.unFollowUser);
-
+// get_followers
+router.get('/:username/get_followers', verifyJWT, profile.get_followers);
 module.exports = router;

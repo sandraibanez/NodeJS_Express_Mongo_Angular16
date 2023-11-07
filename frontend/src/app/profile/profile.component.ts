@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User, UserService, Profile, ProfileService } from '../core';
+import { User, UserService, Profile, ProfileService,Product,ProductService } from '../core';
 import { concatMap, tap } from 'rxjs/operators';
 // import { SharedModule } from '../shared/shared.module';
   
@@ -16,6 +16,9 @@ export class ProfileComponent implements OnInit {
     profile: Profile = {} as Profile;
     currentUser: User = {} as User;
     isUser: boolean = false;
+    listProductsfavorites!: Profile;
+    product!: Product;
+    username!: string;
 
     constructor(
       private route: ActivatedRoute,
@@ -23,6 +26,7 @@ export class ProfileComponent implements OnInit {
       private userService: UserService,
       private cd: ChangeDetectorRef,
       private profileService: ProfileService,
+      private productService: ProductService,
     ) {}
   
     ngOnInit() {
@@ -34,7 +38,6 @@ export class ProfileComponent implements OnInit {
             concatMap((data: { profile?: Profile }) => {
               this.profile = data['profile'] as Profile;
               console.log(this.profile);
-              // Load the current user's data.
               return this.userService.currentUser.pipe(tap(
                 (userData: User) => {
                   this.currentUser = userData;
@@ -47,7 +50,19 @@ export class ProfileComponent implements OnInit {
             this.cd.markForCheck();
           }));
     }
-
+    
+    // getfollowers() {
+    //   console.log('data');
+    //   this.profileService.get_followersUsers(this.profile.username).subscribe({
+    //     next: data => {
+          
+    //       this.profile = data;
+    //       // this.username = this.listProductsfavorites.username;
+    //       console.log( data.username);
+    //     },
+    //     error: error => console.error(error)
+    //   });
+    // }
     logout() {
         this.userService.purgeAuth();
         this.router.navigateByUrl('/');

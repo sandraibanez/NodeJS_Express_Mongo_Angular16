@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
     followingUsers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    }],
+    followersUsers: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User' 
     }]
 },
     {
@@ -72,7 +76,10 @@ userSchema.methods.toProfileJSON = function (user) {
         username: this.username,
         bio: this.bio,
         image: this.image,
-        following: user ? user.isFollowing(this._id) : false
+        following: user ? user.isFollowing(this._id) : false,
+        favorites: this.favorites,
+        followersUsers: this.followersUsers,
+        followingUsers: this.followingUsers
     }
 };
 
@@ -102,8 +109,8 @@ userSchema.methods.unfollow = function (id) {
 
 userSchema.methods.isFavourite = function (id) {
     const idStr = id.toString();
-    for (const article of this.favorites) {
-        if (article.toString() === idStr) {
+    for (const product of this.favorites) {
+        if (product.toString() === idStr) {
             return true;
         }
     }
@@ -114,13 +121,6 @@ userSchema.methods.favorite = function (id) {
     if(this.favorites.indexOf(id) === -1){
         this.favorites.push(id);
     }
-
-    // const article = await Article.findById(id).exec();
-    //
-    // article.favouritesCount += 1;
-    //
-    // await article.save();
-
     return this.save();
 }
 
@@ -128,13 +128,27 @@ userSchema.methods.unfavorite = function (id) {
     if(this.favorites.indexOf(id) !== -1){
         this.favorites.remove(id);
     }
-
-    // const article = await Article.findById(id).exec();
-    //
-    // article.favouritesCount -= 1;
-    //
-    // await article.save();
-
+    return this.save();
+};
+userSchema.methods.isFollower = function (id) {
+    const idStr = id.toString();
+    for (const user of this.followersUsers) {
+        if (user.toString() === idStr) {
+            return true;
+        }
+    }
+    return false;
+}
+userSchema.methods.follower  = function (id) {
+    if(this.followersUsers.indexOf(id) === -1){
+        this.followersUsers.push(id);
+    }
+    return this.save();
+}
+userSchema.methods.unfollower = function (id) {
+    if(this.followersUsers.indexOf(id) !== -1){
+        this.followersUsers.remove(id);
+    }
     return this.save();
 };
 userSchema.methods.toProfileCommentJSON = function () {

@@ -71,14 +71,7 @@ private productsList = new BehaviorSubject<Product[]>([]);
   }
 
   update_product(product: Product): Observable<Product[]> {
-    // console.log(this.apiService.put('products/'+ product.slug, { products:product }));
     return this.http.put<Product[]>(`${URL}/${product.slug}`, { products:product });
-    // return this.apiService.put('products/'+ product.slug, { products:product }).pipe(
-    //   map((data) => {
-    //     console.log(data.slug);
-    //     return data.slug;
-    //   })
-    // );
    }
 
   delete_product(id: String): Observable<Product[]> {
@@ -97,8 +90,10 @@ private productsList = new BehaviorSubject<Product[]>([]);
     return this.http.delete(`${URL}/${id}/favorite`)
   }
 
-  fav_products_user(): Observable<Product[]> {    
-    return this.http.get<Product[]>(`${URL}/user/favorites/`);
+  fav_products_user(): Observable<Product[]> {  
+    // console.log(`${URL}/user/favorites`);  
+    return this.http.get<Product[]>(`${URL}/user/favorites`);
+    // return this.http.get<Product[]>(`profile/`);
   }
 
 }

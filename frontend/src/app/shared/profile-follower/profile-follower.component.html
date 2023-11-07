@@ -1,0 +1,18 @@
+<div *ngIf="listProducts" class="container_cat">
+    <app-card-follower class="item" *ngFor='let profile of listProducts' [profile]="profile"></app-card-follower>
+    
+        
+    
+</div>
+<div *ngFor=" let profile of listProducts">
+    <h1>username: {{profile.username}}</h1>
+    <!-- <h1>username: {{listProducts[1].username}}</h1>
+    <h1>username: {{listProducts[2].username}}</h1>
+    <h1>username: {{listProducts[3].username}}</h1>
+    <h1>username: {{listProducts[4].username}}</h1>
+    <h1>username: {{listProducts[5].username}}</h1>
+    <h1>username: {{listProducts[6].username}}</h1> -->
+</div>
+
+
+

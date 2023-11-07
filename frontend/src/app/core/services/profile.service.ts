@@ -16,7 +16,10 @@ export class ProfileService {
     get(username: string): Observable<Profile> {
         return this.http.get<Profile>(`${URL}/${username}`);
     }
-
+    get_followersUsers(username: string): Observable<Profile[]> {
+        // console.log(`${URL}/${username}/get_followers`);
+        return this.http.get<Profile[]>(`${URL}/${username}/get_followers`);
+    }
     follow(username: string): Observable<any> {
         return this.http.post<any>(`${URL}/${username}/follow`, {});
     }

@@ -16,7 +16,7 @@ export class ProfileProductsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getProducts();
+    // this.getProducts();
   }
 
   getProducts() {

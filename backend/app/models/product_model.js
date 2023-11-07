@@ -61,15 +61,7 @@ product_schema.methods.slugify = function () {
         this.slug = slugify(this.name, { lower: true, replacement: '-'});
         }
 };//slugify
-// product_schema.methods.favoriteCount = function () {
-//     var product = this;
-  
-//     return User.countDocuments({ favorites: { $in: [product._id] } }).then(function (count) {
-//         product.favorites = count;
-//         return product.save();
-//       }
-//     );
-// };
+
 product_schema.methods.updateFavoriteCount = async function () {
     const favoriteCount = await User.count({
         favorites: {$in: [this._id]}
@@ -77,15 +69,7 @@ product_schema.methods.updateFavoriteCount = async function () {
     this.favoritesCount = favoriteCount;
     return this.save();
 }
-// product_schema.methods.addFavorite = function () {
-//     this.favorites = this.favorites + 1;
-//     this.save();
-// }
 
-// product_schema.methods.removeFavorite = function () {
-//     if (this.favorites > 0) { this.favorites = this.favorites - 1; }
-//     this.save();
-// }
 product_schema.methods.toProductCarouselResponse = function(){
     return {
         slug: this.slug,
@@ -143,9 +127,5 @@ product_schema.methods.toJSONAuthorFor = function(user){
     };
 };
 
-// product_schema.methods.toNameJSONFor = function () {
-//     return {
-//       name: this.name,
-//     };
-// };
+
 mongoose.model('Product', product_schema);

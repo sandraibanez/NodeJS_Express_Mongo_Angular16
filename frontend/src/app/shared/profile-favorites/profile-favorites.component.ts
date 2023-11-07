@@ -24,7 +24,7 @@ export class ProfileFavoritesComponent implements OnInit {
   }
 
   getProducts() {
-    console.log("this.ProductService.fav_products_user()",this.ProductService.fav_products_user());
+    console.log("this.ProductService.fav_products_user()",this.listProducts);
     this.ProductService.fav_products_user().subscribe({
       next: data => {
         this.listProducts = data;

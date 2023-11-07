@@ -303,10 +303,12 @@ async function get_favorites (req, res)  {
           message: "User Not Found"
       });
   }
-    const products = await Product.find({_id: User.favorites}).sort("name").populate("author");
-    // console.log("products",products);
+    const products = await Product.find({_id: loginUser.favorites}).sort("name").populate("author");
+    console.log("products",products);
     if (products) {
-      return res.json(products.map(product => product.toproductresponse(User)));
+      console.log(products);
+      return res.json( await products);
+
     } else {
       res.status(404).json({msg: "No products favorited"});
     }
@@ -344,51 +346,51 @@ async function get_favorites (req, res)  {
 //     res.status(500).send({message: "An error has ocurred"});
 //   }
 // }
-async function find_products_user  (req, res) {
-  // try {
-  //   const id = req.userId;
-  //   const user = await User.findById(id).exec();
+// async function find_products_user  (req, res) {
+//   // try {
+//   //   const id = req.userId;
+//   //   const user = await User.findById(id).exec();
 
-  //   if (!user) {
-  //     return res.status(401).json({
-  //       message: "User Not Found"
-  //     });
-  //   }
+//   //   if (!user) {
+//   //     return res.status(401).json({
+//   //       message: "User Not Found"
+//   //     });
+//   //   }
 
-  //   const products = await Product.find({ author: user._id }).exec();
+//   //   const products = await Product.find({ author: user._id }).exec();
 
-  //   if (!products) {
-  //     return res.status(404).json({
-  //       message: "Products Not Found"
-  //     });
-  //   }
+//   //   if (!products) {
+//   //     return res.status(404).json({
+//   //       message: "Products Not Found"
+//   //     });
+//   //   }
 
-  //   const productsWithFullData = await Promise.all(products.map(async product => {
-  //     return await product.toproductresponse(user);
-  //   }));
+//   //   const productsWithFullData = await Promise.all(products.map(async product => {
+//   //     return await product.toproductresponse(user);
+//   //   }));
 
-  //   return res.status(200).json({ products: productsWithFullData });
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).send({message: "An error has ocurred"});
-  // }
-  try {
-    const user = await User.findById(req.auth.id);
-    if (user) {
-      const products = await Product.find({ author: user._id }).sort("name").populate("author");
-      if (!products) {
-        res.status(404).send({message: `Product not found!`});
-      } else {
-        return res.json(products.map(product => product.toJSONAuthorFor(user)));
-      };
-    } else {
-      res.status(404).send({message: `User not found!`});
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({message: "An error has ocurred"});
-  }
-}
+//   //   return res.status(200).json({ products: productsWithFullData });
+//   // } catch (error) {
+//   //   console.error(error);
+//   //   res.status(500).send({message: "An error has ocurred"});
+//   // }
+//   try {
+//     const user = await User.findById(req.auth.id);
+//     if (user) {
+//       const products = await Product.find({ author: user._id }).sort("name").populate("author");
+//       if (!products) {
+//         res.status(404).send({message: `Product not found!`});
+//       } else {
+//         return res.json(products.map(product => product.toJSONAuthorFor(user)));
+//       };
+//     } else {
+//       res.status(404).send({message: `User not found!`});
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({message: "An error has ocurred"});
+//   }
+// }
 const product_controller = {
     getall_products: getall_products,
     getone_product: getone_product,
@@ -399,8 +401,8 @@ const product_controller = {
     readProductsWithCategory,
     favorite:favorite,
     unfavorite:unfavorite,
-    get_favorites:get_favorites,
-    find_products_user:find_products_user
+    get_favorites:get_favorites
+    // find_products_user:find_products_user
 }
 
 module.exports = product_controller

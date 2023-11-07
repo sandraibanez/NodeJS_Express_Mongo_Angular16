@@ -5,7 +5,7 @@ const product_controller = require("../../controllers/products_controller.js")
 
 //api/products
 router.get( '/', product_controller.getall_products);
-router.get('/user/products', verifyJWT, product_controller.find_products_user);
+// router.get('/user/products', verifyJWT, product_controller.find_products_user);
 router.get('/:slug',verifyJWT, product_controller.getone_product);
 router.get('/category/:slug', product_controller.readProductsWithCategory);
 router.post( '/',verifyJWT, product_controller.create_product);

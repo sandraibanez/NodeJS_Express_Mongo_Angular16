@@ -19,8 +19,9 @@ import { ShowAuthedDirective } from './show-authed.directive';
 import { ProfileProductsComponent } from './profile-products/profile-products.component';
 import { ProfileFavoritesComponent } from './profile-favorites/profile-favorites.component';
 import { CardProductComponent } from './card-product/card-product.component';
+import { CardFollowerComponent } from './card-follower/card-follower.component';
 import { FollowButtonComponent, FavoriteButtonComponent } from './buttons';
-// import { FavoriteButtonComponent } from './buttons';
+import { ProfileFollowersComponent } from './profile-follower/profile-follower.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -47,7 +48,9 @@ import { FollowButtonComponent, FavoriteButtonComponent } from './buttons';
         SearchComponent,
         ProfileProductsComponent,
         ProfileFavoritesComponent,
+        ProfileFollowersComponent,
         CardProductComponent,
+        CardFollowerComponent,
         FollowButtonComponent,
         FavoriteButtonComponent
     ],
@@ -65,6 +68,8 @@ import { FollowButtonComponent, FavoriteButtonComponent } from './buttons';
         SearchComponent,
         ProfileProductsComponent,
         ProfileFavoritesComponent,
+        ProfileFollowersComponent,
+        CardFollowerComponent,
         CardProductComponent,
         FollowButtonComponent,
         FavoriteButtonComponent
